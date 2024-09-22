@@ -1,18 +1,34 @@
 import "./InputField.scss";
 
 type InputFieldProps = {
+   name: string;
+   value: number | "";
+   onChange: (e: string) => void;
    className?: string;
    display?: any;
 };
 
-function InputField({ className, display }: InputFieldProps) {
+function InputField({
+   name,
+   value,
+   onChange,
+   className,
+   display
+}: InputFieldProps) {
    return (
-      <div className={`InputField gap-4 w-96 ${className} items-center`}>
+      <div className={`InputField gap-4 w-full ${className} items-center`}>
          <label className={`rounded-xl border border-stone-700 bg-stone-900`}>
-            <input type="text" placeholder=" " />
-            <span>Кількість послуг</span>
+            <input
+               type="text"
+               placeholder=" "
+               value={value}
+               onChange={({ target }) => {
+                  onChange(target.value);
+               }}
+            />
+            <span>{name}</span>
          </label>
-         {display && <span>{display}</span>}
+         {(display !== undefined) && <span className="overflow-x-scroll text-stone-400">{display && "+"}{display}</span>}
       </div>
    );
 }
