@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InputField } from "../components/InputField";
+import { InputField, InputFieldWithInfo } from "../components/InputField";
 import { stringToNumberOrEmptyString } from "../functions/helpers";
 import { ContentBox } from "../components/ContentBox";
 import { Col } from "../components/Col";
@@ -26,11 +26,12 @@ function HomePage() {
             </h1>
             <div className="grid32 gap-4">
                <Col>
-                  <InputField
+                  <InputFieldWithInfo
                      name="Каса"
                      value={total}
                      onChange={handleChange(setTotal)}
                      display={total}
+                     info="Вся каса, враховуючи послуги та різні типи товірів"
                   />
                   <InputField
                      name="Послуги"
@@ -40,7 +41,7 @@ function HomePage() {
                   />
                </Col>
                <Col>
-               <span>233</span>
+                  <span>233</span>
                   {/* <InputField
                      name="Виручка"
                      value={223}
@@ -48,7 +49,10 @@ function HomePage() {
                   /> */}
                </Col>
             </div>
-            <div className="flex justify-between text-stone-400 text-sm"><span>Київ, Лятошинського 14</span> <span>Автор таблиці: ???</span></div>
+            <div className="flex justify-between text-stone-400 text-sm">
+               <span>Київ, Лятошинського 14</span>{" "}
+               <span>Автор таблиці: ???</span>
+            </div>
          </ContentBox>
       </div>
    );

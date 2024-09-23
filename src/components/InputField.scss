@@ -1,18 +1,32 @@
 .InputField {
-display: flex;
+   display: flex;
 
-   & > label {
+   label {
+   }
+
+   & > div > label {
       // Position and size
       flex-basis: 0;
       flex-shrink: 0;
       flex-grow: 5;
 
+      // styles
+      opacity: 0.80;
+      &:hover {
+         opacity: 1;
+      }
+
+      &:has(input:focus){
+         @apply outline outline-stone-700 opacity-100;
+         outline-width: 0.5px;
+      }
 
       // Base input logic
       cursor: text;
       display: block;
       padding: 1em 1em 0.5em;
       position: relative;
+
       span {
          position: absolute;
          top: 0.75em;
@@ -38,9 +52,6 @@ display: flex;
       }
    }
 
-
-
-
    & > span {
       // Position and size
       flex-basis: 0;
@@ -50,4 +61,13 @@ display: flex;
       // Other
       font-size: 1em;
    }
+}
+
+.InputField__Info {
+   &:has(.InputField__Info-hover:hover) .InputField__Info-display {
+      opacity: 1 !important;
+   }
+}
+.InputField__Info-display {
+   transition: all 0.15s ease;
 }
