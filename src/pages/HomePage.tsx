@@ -49,7 +49,7 @@ function HomePage() {
                   /> */}
                </Col>
             </div>
-            <div className="flex justify-between text-stone-400 text-sm">
+            <div className="flex justify-between C-textSoft text-sm">
                <span>Київ, Лятошинського 14</span>{" "}
                <span>Автор таблиці: ???</span>
             </div>

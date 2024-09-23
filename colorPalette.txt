@@ -1,0 +1,16 @@
+Dark theme:
+Text:
+Basic           stone-100
+Basic special   stone-300 (Info button for input fields)
+Light           stone-400
+
+
+
+
+BG:
+Base stone-950
+Box  stone-900
+
+
+Border:
+Box stone-600

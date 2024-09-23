@@ -5,13 +5,13 @@ import { Main } from "./Main";
 
 function Layout() {
    return (
-      <>
+      <div className="lightTheme h-full" id="App"> 
          <Header />
          <Main>
             <Outlet />
          </Main>
          <Footer />
-      </>
+      </div>
    );
 }
 

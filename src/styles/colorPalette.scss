@@ -1,0 +1,47 @@
+@import "mixins";
+///// Text //////
+
+// .darkTheme & {
+//    @apply bg-stone-900;
+// }
+
+// .lightTheme & {
+//    @apply bg-white;
+// }
+
+.C-textBase {
+   @include LightAndDark(text-slate-800, text-stone-200);
+}
+
+.C-textSoft {
+   @include LightAndDark(text-slate-600, text-stone-300);
+}
+
+.C-textSofter {
+   @include LightAndDark(text-slate-500, text-stone-400);
+}
+
+
+////// BG //////
+
+.C-bgBase {
+   @include LightAndDark(bg-slate-50, bg-stone-950);
+}
+
+.C-bgBox {
+   @include LightAndDark(bg-slate-100, bg-stone-900);
+   &:has(.lightTheme) {
+      @apply bg-slate-100;
+   }
+   &:has(.darkTheme) {
+      @apply bg-stone-900;
+   }
+}
+
+////// Border //////
+.C-borderBox {
+   @include LightAndDark(border-slate-400, border-stone-600);
+}
+.C-outlineBox {
+   @include LightAndDark(outline-slate-400, outline-stone-600);
+}

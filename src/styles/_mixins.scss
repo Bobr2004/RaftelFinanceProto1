@@ -1,0 +1,8 @@
+@mixin LightAndDark($lightClass, $darkClass) {
+   .lightTheme & {
+      @apply #{$lightClass};
+   }
+   .darkTheme & {
+      @apply #{$darkClass};
+   }
+}
