@@ -4,9 +4,9 @@ const stringToNumberOrEmptyString = (value: string) => {
    } else if (isFinite(Number(value))) {
       return Number(value);
    }
-   return ""
+   return "";
 };
 
+const round2Digits = (number: number) => Math.round(number * 100) / 100;
 
-export {stringToNumberOrEmptyString}
-
+export { stringToNumberOrEmptyString, round2Digits };

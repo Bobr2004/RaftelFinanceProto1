@@ -24,6 +24,10 @@
 
 ////// BG //////
 
+.C-bgTotal {
+   @include LightAndDark(bg-white, bg-black);
+}
+
 .C-bgBase {
    @include LightAndDark(bg-slate-50, bg-stone-950);
 }
@@ -38,9 +42,10 @@
    }
 }
 
+
 ////// Border //////
 .C-borderBox {
-   @include LightAndDark(border-slate-700, border-stone-600);
+   @include LightAndDark(border-slate-400, border-stone-700);
 }
 .C-outlineBox {
    @include LightAndDark(outline-slate-700, outline-stone-600);
