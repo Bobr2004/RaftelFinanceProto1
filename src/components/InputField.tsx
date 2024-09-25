@@ -2,7 +2,7 @@ import "./InputField.scss";
 
 type InputFieldProps = {
    name: string;
-   value: number | "";
+   value: number | "" | string;
    onChange: (e: string) => void;
    className?: string;
    display?: any;
@@ -17,11 +17,14 @@ function InputField({
    display,
    info
 }: InputFieldProps) {
+   className ??= "";
    return (
       <div className={`InputField gap-4 w-full items-center ${className}`}>
          <div className="relative">
             {info && <InfoButton className="InputField__Info-hover" />}
-            <label className={`C-bgBox C-borderBox rounded-xl border outline outline-0 C-outlineBox`}>
+            <label
+               className={`C-bgBox C-borderBox rounded-xl border outline outline-0 C-outlineBox`}
+            >
                <input
                   type="text"
                   placeholder=" "
@@ -64,7 +67,7 @@ function InputFieldWithInfo({
 function InfoButton({ className }: { className?: string }) {
    return (
       <button
-         className={`C-bgBox C-textSoft C-borderBox rounded-lg border h-5 w-5 absolute -right-1 -top-1 z-10 opacity-75 hover:opacity-100  text-xs ${className}`}
+         className={`C-bgBox C-textSoft C-borderBox rounded-lg border h-5 w-5 absolute -right-1 -top-1 z-10 opacity-85 hover:opacity-100  text-xs ${className}`}
       >
          i
       </button>

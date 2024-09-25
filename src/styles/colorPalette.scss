@@ -14,11 +14,11 @@
 }
 
 .C-textSoft {
-   @include LightAndDark(text-slate-600, text-stone-300);
+   @include LightAndDark(text-slate-700, text-stone-300);
 }
 
 .C-textSofter {
-   @include LightAndDark(text-slate-500, text-stone-400);
+   @include LightAndDark(text-slate-600, text-stone-400);
 }
 
 
@@ -40,8 +40,8 @@
 
 ////// Border //////
 .C-borderBox {
-   @include LightAndDark(border-slate-400, border-stone-600);
+   @include LightAndDark(border-slate-700, border-stone-600);
 }
 .C-outlineBox {
-   @include LightAndDark(outline-slate-400, outline-stone-600);
+   @include LightAndDark(outline-slate-700, outline-stone-600);
 }

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { InputField, InputFieldWithInfo } from "../components/InputField";
-import { stringToNumberOrEmptyString } from "../functions/helpers";
 import { ContentBox } from "../components/ContentBox";
 import { Col } from "../components/Col";
+import { handleNumberInput } from "../functions/inputHandlers";
 
 ////// Experimental
 // import strawHat from "../assets/Straw Hat Icon 147411.svg";
@@ -12,11 +12,7 @@ function HomePage() {
    const [total, setTotal] = useState<number | "">("");
    const [services, setServices] = useState<number | "">("");
 
-   const handleChange =
-      (setter: React.Dispatch<React.SetStateAction<any>>) =>
-      (value: string) => {
-         setter(stringToNumberOrEmptyString(value));
-      };
+   
    return (
       <div className="flex justify-center">
          <ContentBox className="flex flex-col gap-4 mt-40 w-full md:w-[600px]">
@@ -29,24 +25,19 @@ function HomePage() {
                   <InputFieldWithInfo
                      name="Каса"
                      value={total}
-                     onChange={handleChange(setTotal)}
+                     onChange={handleNumberInput(setTotal)}
                      display={total}
                      info="Вся каса, враховуючи послуги та різні типи товірів"
                   />
                   <InputField
                      name="Послуги"
                      value={services}
-                     onChange={handleChange(setServices)}
+                     onChange={handleNumberInput(setServices)}
                      display={services}
                   />
                </Col>
                <Col>
                   <span>233</span>
-                  {/* <InputField
-                     name="Виручка"
-                     value={223}
-                     onChange={handleChange(setTotal)}
-                  /> */}
                </Col>
             </div>
             <div className="flex justify-between C-textSoft text-sm">
