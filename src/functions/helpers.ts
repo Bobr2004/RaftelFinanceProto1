@@ -9,4 +9,12 @@ const stringToNumberOrEmptyString = (value: string) => {
 
 const round2Digits = (number: number) => Math.round(number * 100) / 100;
 
-export { stringToNumberOrEmptyString, round2Digits };
+const adjustClassName = (className?: string) => {
+   if (!className) return "gap-4";
+   if (className.includes("gap")) {
+      return className;
+   }
+   return `${className} gap-4`;
+};
+
+export { stringToNumberOrEmptyString, round2Digits, adjustClassName };

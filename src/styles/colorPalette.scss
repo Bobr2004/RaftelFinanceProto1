@@ -32,6 +32,10 @@
    @include LightAndDark(bg-slate-50, bg-stone-950);
 }
 
+.C-bgBoxInverse {
+   @include LightAndDark(bg-stone-900, bg-slate-100);
+}
+
 .C-bgBox {
    @include LightAndDark(bg-slate-100, bg-stone-900);
    &:has(.lightTheme) {

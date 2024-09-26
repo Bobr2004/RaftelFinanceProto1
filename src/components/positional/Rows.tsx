@@ -1,18 +1,16 @@
+import { adjustClassName } from "../../functions/helpers";
+
 type RowProps = {
    children: React.ReactNode;
    className?: string;
 };
 
 function Row({ children, className }: RowProps) {
-   let resultClassName = "gap-4";
-   if (className?.includes("gap")) resultClassName = className;
-   return <div className={`flex ${resultClassName}`}>{children}</div>;
+   return <div className={`flex ${adjustClassName(className)}`}>{children}</div>;
 }
 
 function Row32({ children, className }: RowProps) {
-   let resultClassName = "gap-4";
-   if (className?.includes("gap")) resultClassName = className;
-   return <div className={`grid32 ${resultClassName}`}>{children}</div>;
+   return <div className={`grid32 ${adjustClassName(className)}`}>{children}</div>;
 }
 
 export { Row, Row32 };
