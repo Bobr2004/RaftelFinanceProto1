@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Row } from "../positional/Rows";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { Col } from "../positional/Cols";
 
 type OpenCloseProps = {
    title?: string;
@@ -9,18 +12,22 @@ type OpenCloseProps = {
 function OpenClose({ title, children }: OpenCloseProps) {
    const [isOpen, setIsOpen] = useState(false);
    return (
-      <div className="flex flex-col gap-2">
-         <Row>
+      <Col className="gap-2">
+         <label className="flex gap-2 cursor-pointer">
             <span>{title} </span>
             <button
-               className="C-bgBox C-borderBox border rounded-xl px-4"
+               className="rounded-xl"
                onClick={() => setIsOpen((isO) => !isO)}
             >
-               {isOpen ? "-" : "+"}
+               {isOpen ? (
+                  <FontAwesomeIcon icon={faCaretUp} />
+               ) : (
+                  <FontAwesomeIcon icon={faCaretDown} />
+               )}
             </button>
-         </Row>
+         </label>
          {isOpen && <div>{children}</div>}
-      </div>
+      </Col>
    );
 }
 

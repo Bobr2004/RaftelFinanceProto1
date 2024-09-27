@@ -1,4 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./InputField.scss";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 type InputFieldProps = {
    name: string;
@@ -67,9 +69,9 @@ function InputFieldWithInfo({
 function InfoButton({ className }: { className?: string }) {
    return (
       <button
-         className={`C-bgBox C-textSoft C-borderBox rounded-lg border h-5 w-5 absolute -right-1 -top-1 z-10 opacity-85 hover:opacity-100  text-xs ${className}`}
+         className={`C-textSoft  rounded-lg h-5 w-5 absolute -right-1 -top-2 z-10 opacity-85 hover:opacity-100 text-lg ${className}`}
       >
-         i
+         <FontAwesomeIcon icon={faCircleInfo} />
       </button>
    );
 }

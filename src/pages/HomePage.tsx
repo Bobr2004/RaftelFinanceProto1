@@ -8,6 +8,7 @@ import { ResultBox } from "../components/ui/ResultBox";
 import { round2Digits } from "../functions/helpers";
 import { OpenClose } from "../components/ui/OpenClose";
 import { Button } from "../components/ui/Button";
+import { Checkbox } from "../components/ui/Checkbox";
 
 ////// Experimental
 // import strawHat from "../assets/Straw Hat Icon 147411.svg";
@@ -24,54 +25,66 @@ function HomePage() {
 
    const resultRevenue = 350 + totalRevenue + servicesRevenue;
 
+   // Test TO DELETE
+   const [isChecked, setIsChecked] = useState(false);
+
    return (
-      <div className="flex justify-center m-4 md:mt-36">
-         <div>
-            <h1 className="font-bold text-2xl text-center mb-4">
-               Mobdevice Revenue
-            </h1>
-            <ContentBox className="flex flex-col gap-4 md:max-w-[650px]">
-               <Row className="items-center">
-                  <span>Підрахунок </span>
-                  <Button>Day</Button>
-                  <Button>Month</Button>
-               </Row>
-               <Row32>
-                  <Col>
+      <>
+         <h1 className="font-bold text-2xl text-center mb-4 mt-4 md:mt-24">
+            Mobdevice Revenue
+         </h1>
+         <ContentBox className="flex flex-col gap-4 md:max-w-[650px] mx-auto">
+            <Row className="items-center">
+               <span>Підрахунок </span>
+               <Button>Day</Button>
+               <Button>Month</Button>
+            </Row>
+            <Row32>
+               <Col>
+                  <label className="flex gap-4 cursor-pointer">
+                     <span>Advanced</span>
+                     <Checkbox
+                        isChecked={isChecked}
+                        onChange={() => {
+                           setIsChecked((isC) => !isC);
+                        }}
+                     />
+                  </label>
+                  {isChecked && "oleg lsp - proect oxxymirona"}
+
+                  <InputFieldWithInfo
+                     name="Каса"
+                     value={total}
+                     onChange={handleNumberInput(setTotal)}
+                     display={round2Digits(totalRevenue) || ""}
+                     info="Вся каса, враховуючи послуги та різні типи товірів"
+                  />
+                  <InputField
+                     name="Послуги"
+                     value={services}
+                     onChange={handleNumberInput(setServices)}
+                     display={round2Digits(servicesRevenue) || ""}
+                  />
+
+                  <OpenClose title="Додатково ">
                      <InputFieldWithInfo
-                        name="Каса"
+                        name="Чайові"
                         value={total}
                         onChange={handleNumberInput(setTotal)}
-                        display={round2Digits(totalRevenue) || ""}
-                        info="Вся каса, враховуючи послуги та різні типи товірів"
+                        info="На чайові не накладається ніякий відсоток"
                      />
-                     <InputField
-                        name="Послуги"
-                        value={services}
-                        onChange={handleNumberInput(setServices)}
-                        display={round2Digits(servicesRevenue) || ""}
-                     />
-
-                     <OpenClose title="Додатково ">
-                        <InputFieldWithInfo
-                           name="Чайові"
-                           value={total}
-                           onChange={handleNumberInput(setTotal)}
-                           info="На чайові не накладається ніякий відсоток"
-                        />
-                     </OpenClose>
-                  </Col>
-                  <Col>
-                     <ResultBox>{round2Digits(resultRevenue)}</ResultBox>
-                  </Col>
-               </Row32>
-               <div className="flex justify-between C-textSoft text-sm">
-                  <span>Київ, Лятошинського 14</span>{" "}
-                  <span>Автор таблиці: ???</span>
-               </div>
-            </ContentBox>
-         </div>
-      </div>
+                  </OpenClose>
+               </Col>
+               <Col>
+                  <ResultBox>{round2Digits(resultRevenue)}</ResultBox>
+               </Col>
+            </Row32>
+            <div className="flex justify-between C-textSoft text-sm">
+               <span>Київ, Лятошинського 14</span>{" "}
+               <span>Автор таблиці: ???</span>
+            </div>
+         </ContentBox>
+      </>
    );
 }
 
