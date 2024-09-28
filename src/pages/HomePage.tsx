@@ -3,7 +3,7 @@ import { InputField, InputFieldWithInfo } from "../components/ui/InputField";
 import { ContentBox } from "../components/ui/ContentBox";
 import { Col } from "../components/positional/Cols";
 import { handleNumberInput } from "../functions/inputHandlers";
-import { Row, Row32 } from "../components/positional/Rows";
+import { LabelRow, Row, Row32 } from "../components/positional/Rows";
 import { ResultBox } from "../components/ui/ResultBox";
 import { round2Digits } from "../functions/helpers";
 import { OpenClose } from "../components/ui/OpenClose";
@@ -41,7 +41,7 @@ function HomePage() {
             </Row>
             <Row32>
                <Col>
-                  <label className="flex gap-4 cursor-pointer">
+                  <LabelRow className="gap-2 self-start">
                      <span>Advanced</span>
                      <Checkbox
                         isChecked={isChecked}
@@ -49,7 +49,7 @@ function HomePage() {
                            setIsChecked((isC) => !isC);
                         }}
                      />
-                  </label>
+                  </LabelRow>
                   {isChecked && "oleg lsp - proect oxxymirona"}
 
                   <InputFieldWithInfo
@@ -66,7 +66,7 @@ function HomePage() {
                      display={round2Digits(servicesRevenue) || ""}
                   />
 
-                  <OpenClose title="Додатково ">
+                  <OpenClose title="Додатково " className="gap-2 self-start">
                      <InputFieldWithInfo
                         name="Чайові"
                         value={total}
@@ -79,10 +79,10 @@ function HomePage() {
                   <ResultBox>{round2Digits(resultRevenue)}</ResultBox>
                </Col>
             </Row32>
-            <div className="flex justify-between C-textSoft text-sm">
+            <Row className="justify-between C-textSoft text-sm">
                <span>Київ, Лятошинського 14</span>{" "}
                <span>Автор таблиці: ???</span>
-            </div>
+            </Row>
          </ContentBox>
       </>
    );

@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { Row } from "../positional/Rows";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { Col } from "../positional/Cols";
+import { LabelRow } from "../positional/Rows";
+import { adjustClassName } from "../../functions/helpers";
 
 type OpenCloseProps = {
    title?: string;
    children: React.ReactNode;
+   className: string;
 };
 
-function OpenClose({ title, children }: OpenCloseProps) {
+function OpenClose({ title, children, className }: OpenCloseProps) {
    const [isOpen, setIsOpen] = useState(false);
    return (
-      <Col className="gap-2">
-         <label className="flex gap-2 cursor-pointer">
+      <Col className={`${adjustClassName(className)}`}>
+         <LabelRow className={`${adjustClassName(className)}`}>
             <span>{title} </span>
             <button
                className="rounded-xl"
@@ -25,7 +27,7 @@ function OpenClose({ title, children }: OpenCloseProps) {
                   <FontAwesomeIcon icon={faCaretDown} />
                )}
             </button>
-         </label>
+         </LabelRow>
          {isOpen && <div>{children}</div>}
       </Col>
    );
