@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InputField, InputFieldWithInfo } from "../components/ui/InputField";
+import { InputField } from "../components/ui/InputField";
 import { ContentBox } from "../components/ui/ContentBox";
 import { Col } from "../components/positional/Cols";
 import { handleNumberInput } from "../functions/inputHandlers";
@@ -52,7 +52,7 @@ function HomePage() {
                   </LabelRow>
                   {isChecked && "oleg lsp - proect oxxymirona"}
 
-                  <InputFieldWithInfo
+                  <InputField
                      name="Каса"
                      value={total}
                      onChange={handleNumberInput(setTotal)}
@@ -67,7 +67,7 @@ function HomePage() {
                   />
 
                   <OpenClose title="Додатково " className="gap-2 self-start">
-                     <InputFieldWithInfo
+                     <InputField
                         name="Чайові"
                         value={total}
                         onChange={handleNumberInput(setTotal)}
