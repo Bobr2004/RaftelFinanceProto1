@@ -15,7 +15,7 @@ function ModalTemplate({ children, title }: ModalTemplate) {
       <div className="C-textBase absoluteCenter p-6 z-30 w-full max-w-[600px]">
          <ContentBox className="w-full relative min-h-40">
             <CloseButton />
-            <h2 className="text-center">{title}</h2>
+            <h2 className="text-center mb-8">{title}</h2>
             {children}
          </ContentBox>
       </div>

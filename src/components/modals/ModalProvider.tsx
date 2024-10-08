@@ -20,7 +20,6 @@ function ModalProvider() {
          return (
             <>
                <Overlay />
-               <ModalTemplate />
             </>
          );
    }

@@ -6,3 +6,12 @@
       @apply #{$darkClass};
    }
 }
+@mixin LightAndDarkImportant($lightClass, $darkClass) {
+   .lightTheme & {
+      @apply #{'!' + $lightClass};
+   }
+   .darkTheme & {
+      @apply #{'!' + $darkClass};
+   }
+}
+
