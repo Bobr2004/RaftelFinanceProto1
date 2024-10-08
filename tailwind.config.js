@@ -10,14 +10,28 @@ export default {
             "customDark-200": "#171717", // box bg
             "customDark-300": "#1f1f1f", // buttons bg
 
+            "customDark-325": "#252525", // buttons focus bg
+
             "customDark-400": "#2e2e2e", //border
-            "customDark-500": "#363636", //lighter border
+            "customDark-500": "#363636", //hover border
+            "customDark-600": "#454545", //focus border
 
 
             // Light
-            // customDark: "#0f0f0f",
-            // "customDark-100": "#121212",
-            // "customDark-400": "#2e2e2e"
+            customLight: "#fdfdfd", //black bg
+            "customLight-100": "#fcfcfc", // inputs bg
+            "customLight-200": "#ffffff", // box bg
+            "customLight-300": "#fcfcfc", // buttons bg
+
+
+
+            "customLight-325": "#f5f5f5", // buttons focus bg
+
+
+
+            "customLight-400": "#dfdfdf", //border
+            "customLight-500": "#d4d4d4", //hover border
+            "customLight-600": "#8f8f8f", //focus border
          }
       }
    },

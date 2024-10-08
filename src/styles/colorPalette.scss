@@ -1,56 +1,61 @@
 @import "mixins";
 ///// Text //////
 
-
-
 .C-textBase {
-   @include LightAndDark(text-slate-800, text-stone-200);
+   @include LightAndDark(text-customDark-200, text-customLight-200);
 }
 
 .C-textSoft {
-   @include LightAndDark(text-slate-700, text-stone-300);
+   @include LightAndDark(text-customDark-400, text-customLight-400);
 }
 
 .C-textSofter {
-   @include LightAndDark(text-slate-600, text-stone-400);
+   @include LightAndDark(text-customDark-600, text-customLight-600);
 }
-
 
 ////// BG //////
 
 .C-bgTotal {
-   @include LightAndDark(bg-white, bg-customDark);
+   @include LightAndDark(bg-customLight, bg-customDark);
 }
 
 .C-bgBase {
-   @include LightAndDark(bg-slate-50, bg-customDark-100);
+   @include LightAndDark(bg-customLight-100, bg-customDark-100);
 }
 
 .C-bgBoxInverse {
-   @include LightAndDark(bg-customDark-200, bg-slate-100);
+   @include LightAndDark(bg-customDark-200, bg-customLight-200);
 }
 
 .C-bgBox {
-   @include LightAndDark(bg-slate-100, bg-customDark-200);
-
+   @include LightAndDark(bg-customLight-200, bg-customDark-200);
 }
 
 .C-bgSpecialBox {
-   @include LightAndDark(bg-slate-100, bg-customDark-300);
-
+   @include LightAndDark(bg-customLight-300, bg-customDark-300);
 }
 
+.C-hoverSpecialBox {
+   transition: all 0.15s ease;
+   &:hover {
+      @include LightAndDark(bg-customLight-325, bg-customDark-325);
+   }
+}
 
 ////// Border //////
 .C-borderBox {
-   @include LightAndDark(border-slate-400, border-customDark-400);
+   @include LightAndDark(border-customLight-400, border-customDark-400);
 }
 .C-outlineBox {
-   @include LightAndDark(outline-slate-700, outline-customDark-500);
+   @include LightAndDark(outline-customLight-600, outline-customDark-600);
 }
 
-
-
+.C-hoverBorderBox {
+   transition: all 0.15s ease;
+   &:hover {
+      @include LightAndDark(border-customLight-600, border-customDark-600);
+   }
+}
 
 // .darkTheme & {
 //    @apply bg-stone-900;
@@ -59,10 +64,3 @@
 // .lightTheme & {
 //    @apply bg-white;
 // }
-
-// &:has(.lightTheme) {
-   //    @apply bg-slate-100;
-   // }
-   // &:has(.darkTheme) {
-   //    @apply bg-stone-900;
-   // }

@@ -26,7 +26,7 @@ function InputField({
             <div className="relative">
                {info && <InfoButton className="InputField__Info-hover" />}
                <label
-                  className={`C-bgBase C-borderBox rounded-xl border outline outline-0 C-outlineBox`}
+                  className={`C-bgSpecialBox C-borderBox rounded-xl border outline outline-0 C-outlineBox`}
                >
                   <input
                      type="text"
