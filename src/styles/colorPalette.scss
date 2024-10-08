@@ -29,6 +29,14 @@
 
 .C-bgBox {
    @include LightAndDark(bg-customLight-200, bg-customDark-200);
+
+   &:has(.lightTheme) {
+      @apply bg-customLight-200;
+   }
+   &:has(.darkTheme) {
+      @apply bg-customDark-200;
+   }
+
 }
 
 .C-bgSpecialBox {

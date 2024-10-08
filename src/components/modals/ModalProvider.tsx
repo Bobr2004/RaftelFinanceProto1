@@ -3,6 +3,7 @@ import { RootState } from "../../store/store";
 import { Overlay } from "./Overlay";
 import { SettingsModal } from "./SettingsModal";
 import { BillModal } from "./BillModal";
+import { ModalTemplate } from "./ModalTemplate";
 
 function ModalProvider() {
    const { isOpen, type } = useSelector((store: RootState) => store.modals);
@@ -19,7 +20,7 @@ function ModalProvider() {
          return (
             <>
                <Overlay />
-               <BillModal />
+               <ModalTemplate />
             </>
          );
    }

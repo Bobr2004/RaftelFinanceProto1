@@ -12,3 +12,6 @@ function ContentBox({ children, className }: ContentBoxProps) {
 }
 
 export { ContentBox };
+
+import React from "react";
+

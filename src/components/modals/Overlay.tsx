@@ -10,10 +10,18 @@ function Overlay({ children }: OverlayProps) {
    const dispatch = useDispatch();
 
    useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+         if (e.key === "Escape") dispatch(closeModals());
+      };
+
+      document.addEventListener("keydown", handleKeyDown);
+
       const body = document.querySelector("body");
       if (body) body.style.overflow = "hidden";
       return () => {
          if (body) body.style.overflow = "scroll";
+         document.removeEventListener("keydown", handleKeyDown);
+         (document.activeElement as HTMLElement).blur();
       };
    }, []);
 
