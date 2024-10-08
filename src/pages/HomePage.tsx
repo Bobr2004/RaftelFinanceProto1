@@ -27,7 +27,6 @@ function HomePage() {
 
    // Test TO DELETE
    const [isChecked, setIsChecked] = useState(false);
-
    return (
       <>
          <h1 className="font-bold text-2xl text-center mb-4 mt-4 md:mt-24">

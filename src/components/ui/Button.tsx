@@ -8,7 +8,7 @@ function Button({ children, className, onClick }: ButtonProps) {
    className ??= "";
    return (
       <button
-         className={`C-bgBox C-borderBox rounded-xl border py-2 px-4 text-center ${className}`}
+         className={`C-bgSpecialBox C-borderBox rounded-xl border py-2 px-4 text-center ${className}`}
          onClick={onClick}
       >
          {children}
@@ -16,4 +16,16 @@ function Button({ children, className, onClick }: ButtonProps) {
    );
 }
 
-export { Button };
+function ButtonIcon({ children, className, onClick }: ButtonProps) {
+   className ??= "";
+   return (
+      <button
+         className={`C-bgSpecialBox C-borderBox rounded-xl border py-1 px-3 text-center ${className}`}
+         onClick={onClick}
+      >
+         {children}
+      </button>
+   );
+}
+
+export { Button, ButtonIcon };

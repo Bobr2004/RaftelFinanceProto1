@@ -25,5 +25,10 @@ function Row32({ children, className }: RowProps) {
       <div className={`grid32 ${adjustClassName(className)}`}>{children}</div>
    );
 }
+function Row23({ children, className }: RowProps) {
+   return (
+      <div className={`grid23 ${adjustClassName(className)}`}>{children}</div>
+   );
+}
 
-export { Row, Row32, LabelRow };
+export { Row, Row32, Row23, LabelRow };

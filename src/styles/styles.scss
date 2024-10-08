@@ -16,7 +16,8 @@ body,
 }
 
 // Custom selectors
-.grid32 {
+.grid32,
+.grid23 {
    display: grid;
    grid-template-columns: 1fr;
 }
@@ -25,4 +26,14 @@ body,
    .grid32 {
       grid-template-columns: 3fr 2fr;
    }
+   .grid23 {
+      grid-template-columns: 2fr 3fr;
+   }
+}
+
+.absoluteCenter {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
 }

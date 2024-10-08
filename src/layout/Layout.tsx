@@ -2,6 +2,7 @@ import { Outlet, useSearchParams } from "react-router-dom";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Main } from "./Main";
+import { ModalProvider } from "../components/modals/ModalProvider";
 
 function Layout() {
    const [searchParams] = useSearchParams();
@@ -12,6 +13,7 @@ function Layout() {
    }
    return (
       <div className={`${theme}Theme h-full`} id="App">
+         <ModalProvider />
          <Header />
          <Main>
             <Outlet />
