@@ -21,8 +21,6 @@ function HomePage() {
    const totalRevenue = (Number(total) - Number(services)) * 0.06;
    const servicesRevenue = Number(services) / 2;
 
-   console.log(totalRevenue);
-
    const resultRevenue = 350 + totalRevenue + servicesRevenue;
 
    // Test TO DELETE

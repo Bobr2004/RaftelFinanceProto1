@@ -1,9 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Overlay } from "./Overlay";
-import { SettingsModal } from "./SettingsModal";
-import { BillModal } from "./BillModal";
-import { ModalTemplate } from "./ModalTemplate";
+import { SettingsModal } from "./settings/SettingsModal";
 
 function ModalProvider() {
    const { isOpen, type } = useSelector((store: RootState) => store.modals);

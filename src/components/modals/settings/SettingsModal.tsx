@@ -1,9 +1,9 @@
-import { Col } from "../positional/Cols";
-import { Row, Row23 } from "../positional/Rows";
-import { Button } from "../ui/Button";
-import { Divider } from "../ui/Divider";
-import { InputField } from "../ui/InputField";
-import { ModalTemplate } from "./ModalTemplate";
+import { Col } from "../../positional/Cols";
+import { Row, Row23 } from "../../positional/Rows";
+import { Button } from "../../ui/Button";
+import { Divider } from "../../ui/Divider";
+import { ModalTemplate } from "../ModalTemplate";
+import { FontSizeSetting } from "./FontSizeSetting";
 
 function SettingsModal() {
    return (
@@ -17,14 +17,7 @@ function SettingsModal() {
                </Row>
             </Row23>
             <Divider />
-            <Row23 className="items-center">
-               <span>Розмір Шрифту</span>
-               <Row className="flex-wrap">
-                  <Button className="text-[14px]">14px</Button>
-                  <Button className="text-[16px] C-focusSpecialBox">16px</Button>
-                  <Button className="text-[18px]">18px</Button>
-               </Row>
-            </Row23>
+            <FontSizeSetting />
             <Divider />
             <Row23 className="items-center">
                <span>Вибір мови</span>

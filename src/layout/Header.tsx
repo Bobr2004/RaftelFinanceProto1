@@ -12,7 +12,7 @@ function Header() {
    };
 
    return (
-      <header className="C-textBase C-bgBox C-borderBox border-b py-4 px-8 text-center md:text-start flex justify-between items-center">
+      <header className="C-bgBox C-borderBox border-b py-4 px-8 text-center md:text-start flex justify-between items-center">
          <span>Raftel Proto 0.1</span>
          <ButtonIcon onClick={settingsClick}>
             <FontAwesomeIcon icon={faGear} />

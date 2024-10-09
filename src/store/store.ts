@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { modalsSliceReducer } from "./modalsSlice";
+import { settingsSliceReducer } from "./settingsSlice";
 
 const rootReducer = combineReducers({
-   modals: modalsSliceReducer
+   modals: modalsSliceReducer,
+   settings: settingsSliceReducer
 });
 type RootState = ReturnType<typeof rootReducer>;
 
