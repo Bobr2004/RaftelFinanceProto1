@@ -22,11 +22,11 @@ type ChangeThemeButtonProps = {
 
 function ChangeThemeButton({ theme, children }: ChangeThemeButtonProps) {
    const dispatch = useDispatch();
-   const currentFontSize = useSelector(
+   const currentTheme = useSelector(
       (store: RootState) => store.settings.theme
    );
 
-   const isActive = currentFontSize === theme;
+   const isActive = currentTheme === theme;
 
    const themeChange = (theme: "dark" | "light") => {
       dispatch(changeTheme(theme));

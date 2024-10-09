@@ -3,34 +3,22 @@ import { Row, Row23 } from "../../positional/Rows";
 import { Button } from "../../ui/Button";
 import { Divider } from "../../ui/Divider";
 import { ModalTemplate } from "../ModalTemplate";
+import { CurrencySetting } from "./CurrencySetting";
 import { FontSizeSetting } from "./FontSizeSetting";
+import { LanguageSetting } from "./LanguageSeting";
 import { ThemeSetting } from "./ThemeSetting";
 
 function SettingsModal() {
    return (
       <ModalTemplate title="Settings">
          <Col>
-            <ThemeSetting/>
+            <ThemeSetting />
             <Divider />
             <FontSizeSetting />
             <Divider />
-            <Row23 className="items-center">
-               <span>Вибір мови</span>
-               <Row className="flex-wrap">
-                  <Button>English</Button>
-                  <Button className="C-focusSpecialBox">Українська</Button>
-               </Row>
-            </Row23>
+            <LanguageSetting />
             <Divider />
-            <Row23 className="items-center">
-               <span>Вибір валюти</span>
-               <Row className="flex-wrap">
-                  <Button className="C-focusSpecialBox">UAH ₴</Button>
-                  <Button>$ USD </Button>
-                  <Button>BIT ₿</Button>
-                  <Button>+</Button>
-               </Row>
-            </Row23>
+            <CurrencySetting />
          </Col>
       </ModalTemplate>
    );

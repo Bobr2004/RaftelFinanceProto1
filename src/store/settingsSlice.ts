@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type currencyType = `${string}-${string}-${string}`;
+
 type settingsSliceType = {
    theme: "dark" | "light";
    fontSize: `${number}px`;
    language: "english" | "ukrainian";
-   currency: "UAH" | "USD" | "BIT" | string;
+   currency: currencyType;
 };
 
 const getSettingsFromStorage = () => {
@@ -12,16 +14,14 @@ const getSettingsFromStorage = () => {
    const storageFontSize = localStorage.getItem("storageFontSize");
    const storageLanguage = localStorage.getItem("storageLanguage");
    const storageCurrency = localStorage.getItem("storageCurrency");
-   console.log(storageFontSize)
+   console.log(storageFontSize);
    return {
       theme: storageTheme || "dark",
       fontSize: storageFontSize || "16px",
       language: storageLanguage || "ukrainian",
-      currency: storageCurrency || "UAH"
+      currency: storageCurrency || "UAH-грн-₴"
    } as settingsSliceType;
 };
-
-console.log(getSettingsFromStorage())
 
 const initialState = getSettingsFromStorage();
 
@@ -38,14 +38,13 @@ const settingsSlice = createSlice({
       changeLanguage(state, action: PayloadAction<"english" | "ukrainian">) {
          state.language = action.payload;
       },
-      changeCurrency(
-         state,
-         action: PayloadAction<"UAH" | "USD" | "BIT" | string>
-      ) {
+      changeCurrency(state, action: PayloadAction<currencyType>) {
          state.currency = action.payload;
       }
    }
 });
+
+export type { currencyType };
 
 export const { changeTheme, changeFontSize, changeLanguage, changeCurrency } =
    settingsSlice.actions;

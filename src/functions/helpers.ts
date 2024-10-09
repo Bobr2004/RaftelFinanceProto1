@@ -1,3 +1,5 @@
+import { currencyType } from "../store/settingsSlice";
+
 const stringToNumberOrEmptyString = (value: string) => {
    if (value === "") {
       return "";
@@ -17,4 +19,6 @@ const adjustClassName = (className?: string) => {
    return `${className} gap-4`;
 };
 
-export { stringToNumberOrEmptyString, round2Digits, adjustClassName };
+const parseCurrency = (currency: currencyType) => currency.split("-");
+
+export { stringToNumberOrEmptyString, round2Digits, adjustClassName, parseCurrency };
