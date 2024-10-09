@@ -14,7 +14,6 @@ const getSettingsFromStorage = () => {
    const storageFontSize = localStorage.getItem("storageFontSize");
    const storageLanguage = localStorage.getItem("storageLanguage");
    const storageCurrency = localStorage.getItem("storageCurrency");
-   console.log(storageFontSize);
    return {
       theme: storageTheme || "dark",
       fontSize: storageFontSize || "16px",

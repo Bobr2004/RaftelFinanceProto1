@@ -40,7 +40,7 @@ function InputField({
                </label>
             </div>
             {display !== undefined && (
-               <span className="C-textSofter overflow-x-scroll">
+               <span className="C-textSofter overflow-x-scroll whitespace-nowrap">
                   {display && "+"}
                   {display}
                </span>

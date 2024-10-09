@@ -12,7 +12,7 @@ function CurrencySetting() {
          <Row className="flex-wrap">
             <ChangeCurrencyButton currency="UAH-грн-₴" />
             <ChangeCurrencyButton currency="USD-dol-$" />
-            <ChangeCurrencyButton currency="BIT-bit-₿" />
+            <ChangeCurrencyButton currency="BTC-bit-₿" />
          </Row>
       </Row23>
    );

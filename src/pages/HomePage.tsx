@@ -5,10 +5,12 @@ import { Col } from "../components/positional/Cols";
 import { handleNumberInput } from "../functions/inputHandlers";
 import { LabelRow, Row, Row32 } from "../components/positional/Rows";
 import { ResultBox } from "../components/ui/ResultBox";
-import { round2Digits } from "../functions/helpers";
+import { parseCurrency, round2Digits } from "../functions/helpers";
 import { OpenClose } from "../components/ui/OpenClose";
 import { Button } from "../components/ui/Button";
 import { Checkbox } from "../components/ui/Checkbox";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 ////// Experimental
 // import strawHat from "../assets/Straw Hat Icon 147411.svg";
@@ -25,6 +27,8 @@ function HomePage() {
 
    // Test TO DELETE
    const [isChecked, setIsChecked] = useState(false);
+   const currency = useSelector((store: RootState) => store.settings.currency);
+   const [_, currencyName] = parseCurrency(currency);
    return (
       <>
          <h1 className="font-bold text-center mb-8 mt-8 md:mt-24">
@@ -53,23 +57,30 @@ function HomePage() {
                      name="Каса"
                      value={total}
                      onChange={handleNumberInput(setTotal)}
-                     display={round2Digits(totalRevenue) || ""}
+                     display={
+                        `${round2Digits(totalRevenue)} ${currencyName}` || ""
+                     }
                      info="Вся каса, враховуючи послуги та різні типи товірів"
                   />
                   <InputField
                      name="Послуги"
                      value={services}
                      onChange={handleNumberInput(setServices)}
-                     display={round2Digits(servicesRevenue) || ""}
+                     display={
+                        `${round2Digits(servicesRevenue)} ${currencyName}` || ""
+                     }
                   />
 
-                  <OpenClose title="Додатково " className="gap-2 self-start">
-                     <InputField
-                        name="Чайові"
-                        value={total}
-                        onChange={handleNumberInput(setTotal)}
-                        info="На чайові не накладається ніякий відсоток"
-                     />
+                  <OpenClose
+                     title="Додатково "
+                     className="gap-2 self-start w-full"
+                  >
+                        <InputField
+                           name="Чайові"
+                           value={total}
+                           onChange={handleNumberInput(setTotal)}
+                           info="На чайові не накладається ніякий відсоток"
+                        />
                   </OpenClose>
                </Col>
                <Col>
