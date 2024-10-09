@@ -4,18 +4,13 @@ import { Button } from "../../ui/Button";
 import { Divider } from "../../ui/Divider";
 import { ModalTemplate } from "../ModalTemplate";
 import { FontSizeSetting } from "./FontSizeSetting";
+import { ThemeSetting } from "./ThemeSetting";
 
 function SettingsModal() {
    return (
       <ModalTemplate title="Settings">
          <Col>
-            <Row23 className="items-center">
-               <span>Візуальна тема</span>
-               <Row className="flex-wrap">
-                  <Button>Світла</Button>
-                  <Button className="C-focusSpecialBox">Темна</Button>
-               </Row>
-            </Row23>
+            <ThemeSetting/>
             <Divider />
             <FontSizeSetting />
             <Divider />
