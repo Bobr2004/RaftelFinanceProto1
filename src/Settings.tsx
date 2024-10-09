@@ -1,8 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import { useEffect } from "react";
-import { changeFontSize } from "./store/settingsSlice";
 
 type SettingsProps = {
    children: React.ReactNode;
@@ -15,7 +13,7 @@ function Settings({ children }: SettingsProps) {
    // if (themeFromParams && ["dark", "light"].includes(themeFromParams)) {
    //    theme = themeFromParams;
    // }
-   const dispatch = useDispatch();
+   // const dispatch = useDispatch();
    const { theme, fontSize, language, currency } = useSelector(
       (store: RootState) => store.settings
    );
@@ -28,7 +26,7 @@ function Settings({ children }: SettingsProps) {
    }, [theme, fontSize, language, currency]);
 
    return (
-      <div className={`h-full ${theme}Theme fontSize${fontSize}`}>
+      <div className={`h-full ${theme}Theme`} style={{fontSize}}>
          <div className="h-full C-textBase flex flex-col">{children}</div>
       </div>
    );

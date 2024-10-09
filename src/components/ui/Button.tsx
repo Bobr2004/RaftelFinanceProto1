@@ -2,12 +2,13 @@ type ButtonProps = {
    children: React.ReactNode;
    className?: string;
    onClick?: () => void;
+   style?: React.CSSProperties
 };
 
-function Button({ children, className, onClick }: ButtonProps) {
+function Button({ children, className, onClick, style }: ButtonProps) {
    className ??= "";
    return (
-      <button
+      <button style={style}
          className={`C-bgSpecialBox C-hoverSpecialBox C-borderBox C-hoverBorderBox rounded-xl border py-2 px-4 text-center ${className}`}
          onClick={onClick}
       >

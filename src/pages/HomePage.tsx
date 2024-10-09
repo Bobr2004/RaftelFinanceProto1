@@ -27,7 +27,7 @@ function HomePage() {
    const [isChecked, setIsChecked] = useState(false);
    return (
       <>
-         <h1 className="font-bold text-center mb-4 mt-4 md:mt-24">
+         <h1 className="font-bold text-center mb-8 mt-8 md:mt-24">
             Mobdevice Revenue
          </h1>
          <ContentBox className="flex flex-col gap-4 md:max-w-[650px] mx-auto">

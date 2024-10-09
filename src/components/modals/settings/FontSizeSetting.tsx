@@ -9,22 +9,20 @@ function FontSizeSetting() {
       <Row23 className="items-center">
          <span>Розмір Шрифту</span>
          <Row className="flex-wrap">
-            <ChangeFontSizeButton className="text-[14px]" fontSize="14px" />
-            <ChangeFontSizeButton className="text-[16px]" fontSize="16px" />
-            <ChangeFontSizeButton className="text-[18px]" fontSize="18px" />
+            {/* <ChangeFontSizeButton fontSize="12px" /> */}
+            <ChangeFontSizeButton fontSize="14px" />
+            <ChangeFontSizeButton fontSize="16px" />
+            <ChangeFontSizeButton fontSize="18px" />
+            {/* <ChangeFontSizeButton fontSize="20px" /> */}
          </Row>
       </Row23>
    );
 }
 type ChangeFontSizeButtonProps = {
-   className: string;
-   fontSize: "14px" | "16px" | "18px";
+   fontSize: `${number}px`;
 };
 
-function ChangeFontSizeButton({
-   className,
-   fontSize
-}: ChangeFontSizeButtonProps) {
+function ChangeFontSizeButton({ fontSize }: ChangeFontSizeButtonProps) {
    const dispatch = useDispatch();
    const currentFontSize = useSelector(
       (store: RootState) => store.settings.fontSize
@@ -32,13 +30,14 @@ function ChangeFontSizeButton({
 
    const isActive = currentFontSize === fontSize;
 
-   const fontSizeChange = (size: "14px" | "16px" | "18px") => {
+   const fontSizeChange = (size: `${number}px`) => {
       dispatch(changeFontSize(size));
    };
 
    return (
       <Button
-         className={`${className} ${isActive ? "C-focusSpecialBox" : ""}`}
+         style={{ fontSize }}
+         className={`${isActive ? "C-focusSpecialBox" : ""}`}
          onClick={() => fontSizeChange(fontSize)}
       >
          {fontSize}

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type settingsSliceType = {
    theme: "dark" | "light";
-   fontSize: "14px" | "16px" | "18px";
+   fontSize: `${number}px`;
    language: "english" | "ukrainian";
    currency: "UAH" | "USD" | "BIT" | string;
 };
@@ -32,7 +32,7 @@ const settingsSlice = createSlice({
       changeTheme(state, action: PayloadAction<"dark" | "light">) {
          state.theme = action.payload;
       },
-      changeFontSize(state, action: PayloadAction<"14px" | "16px" | "18px">) {
+      changeFontSize(state, action: PayloadAction<`${number}px`>) {
          state.fontSize = action.payload;
       },
       changeLanguage(state, action: PayloadAction<"english" | "ukrainian">) {
