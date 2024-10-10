@@ -60,11 +60,15 @@
    }
 }
 
+.InputField__Info-display {
+   opacity: 0.1;
+   transition: all 0.15s ease;
+   filter: blur(5px);
+}
+
 .InputField__Info {
    &:has(.InputField__Info-hover:hover) .InputField__Info-display {
       opacity: 1 !important;
+      filter: none;
    }
-}
-.InputField__Info-display {
-   transition: all 0.15s ease;
 }

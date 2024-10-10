@@ -46,7 +46,7 @@ function InputField({
                </span>
             )}
          </div>
-         <div className="InputField__Info-display C-textSoft text-xs opacity-[0.03] px-1">
+         <div className="InputField__Info-display C-textSoft text-xs px-1">
             {info}
          </div>
       </div>

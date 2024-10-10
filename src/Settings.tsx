@@ -14,19 +14,22 @@ function Settings({ children }: SettingsProps) {
    //    theme = themeFromParams;
    // }
    // const dispatch = useDispatch();
-   const { theme, fontSize, language, currency } = useSelector(
-      (store: RootState) => store.settings
-   );
+   const { theme, fontSize, language, currency, customCurrencyList } =
+      useSelector((store: RootState) => store.settings);
 
    useEffect(() => {
       localStorage.setItem("storageTheme", theme);
       localStorage.setItem("storageFontSize", fontSize);
       localStorage.setItem("storageLanguage", language);
       localStorage.setItem("storageCurrency", currency);
-   }, [theme, fontSize, language, currency]);
+      localStorage.setItem(
+         "storageCustomCurrencyList",
+         JSON.stringify(customCurrencyList)
+      );
+   }, [theme, fontSize, language, currency, customCurrencyList]);
 
    return (
-      <div className={`h-full ${theme}Theme`} style={{fontSize}}>
+      <div className={`h-full ${theme}Theme`} style={{ fontSize }}>
          <div className="h-full C-textBase flex flex-col">{children}</div>
       </div>
    );

@@ -7,7 +7,7 @@ import { RootState } from "../../../store/store";
 function LanguageSetting() {
    return (
       <Row23 className="items-center">
-         <span>Розмір Шрифту</span>
+         <span>Вибір мови</span>
          <Row className="flex-wrap">
             <ChangeLanguageButton language="ukrainian">Українська</ChangeLanguageButton>
             <ChangeLanguageButton language="english">English</ChangeLanguageButton>
