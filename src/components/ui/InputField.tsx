@@ -21,7 +21,7 @@ function InputField({
 }: InputFieldProps) {
    className ??= "";
    return (
-      <div className="InputField__Info flex flex-col gap-1 -mb-3">
+      <div className="InputField__Info flex flex-col gap-1 -mb-2">
          <div className={`InputField gap-4 w-full items-center ${className}`}>
             <div className="relative">
                {info && <InfoButton className="InputField__Info-hover" />}
