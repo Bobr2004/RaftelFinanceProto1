@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { changeCurrency, changeLanguage, currencyType } from "../../../store/settingsSlice";
+import { changeCurrency, currencyType } from "../../../store/settingsSlice";
 import { Row, Row23 } from "../../positional/Rows";
 import { Button } from "../../ui/Button";
 import { RootState } from "../../../store/store";
 import { parseCurrency } from "../../../functions/helpers";
+
+// UUID
+import { v4 as generateId } from "uuid";
 
 function CurrencySetting() {
    return (
@@ -22,7 +25,7 @@ type ChangeCurrencyButtonProps = {
    currency: currencyType;
 };
 
-function ChangeCurrencyButton({currency }: ChangeCurrencyButtonProps) {
+function ChangeCurrencyButton({ currency }: ChangeCurrencyButtonProps) {
    const dispatch = useDispatch();
    const currentCurrency = useSelector(
       (store: RootState) => store.settings.currency
@@ -39,7 +42,10 @@ function ChangeCurrencyButton({currency }: ChangeCurrencyButtonProps) {
    return (
       <Button
          className={`${isActive ? "C-focusSpecialBox" : ""}`}
-         onClick={() => currencyChange(currency)}
+         onClick={() => {
+            console.log(generateId());
+            currencyChange(currency);
+         }}
       >
          {code} {symbol}
       </Button>

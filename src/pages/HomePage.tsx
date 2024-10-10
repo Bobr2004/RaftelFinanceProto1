@@ -25,6 +25,11 @@ function HomePage() {
 
    const resultRevenue = 350 + totalRevenue + servicesRevenue;
 
+   const displayRevenue = (revenue: number) => {
+      if (!round2Digits(revenue)) return "";
+      return `${round2Digits(revenue)} ${currencyName}`;
+   };
+
    // Test TO DELETE
    const [isChecked, setIsChecked] = useState(false);
    const currency = useSelector((store: RootState) => store.settings.currency);
@@ -57,30 +62,27 @@ function HomePage() {
                      name="Каса"
                      value={total}
                      onChange={handleNumberInput(setTotal)}
-                     display={
-                        `${round2Digits(totalRevenue)} ${currencyName}` || ""
-                     }
+                     display={displayRevenue(totalRevenue)}
                      info="Вся каса, враховуючи послуги та різні типи товірів"
                   />
                   <InputField
                      name="Послуги"
                      value={services}
                      onChange={handleNumberInput(setServices)}
-                     display={
-                        `${round2Digits(servicesRevenue)} ${currencyName}` || ""
-                     }
+                     display={displayRevenue(servicesRevenue)}
+
                   />
 
                   <OpenClose
                      title="Додатково "
                      className="gap-2 self-start w-full"
                   >
-                        <InputField
-                           name="Чайові"
-                           value={total}
-                           onChange={handleNumberInput(setTotal)}
-                           info="На чайові не накладається ніякий відсоток"
-                        />
+                     <InputField
+                        name="Чайові"
+                        value={total}
+                        onChange={handleNumberInput(setTotal)}
+                        info="На чайові не накладається ніякий відсоток"
+                     />
                   </OpenClose>
                </Col>
                <Col>

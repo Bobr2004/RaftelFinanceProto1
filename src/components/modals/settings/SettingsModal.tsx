@@ -1,6 +1,4 @@
 import { Col } from "../../positional/Cols";
-import { Row, Row23 } from "../../positional/Rows";
-import { Button } from "../../ui/Button";
 import { Divider } from "../../ui/Divider";
 import { ModalTemplate } from "../ModalTemplate";
 import { CurrencySetting } from "./CurrencySetting";

@@ -15,7 +15,7 @@ function OpenClose({ title, children, className }: OpenCloseProps) {
    const [isOpen, setIsOpen] = useState(false);
    return (
       <Col className={`${adjustClassName(className)}`}>
-         <LabelRow className={`${adjustClassName(className)}`}>
+         <LabelRow className={`${adjustClassName(className)} w-max`}>
             <span>{title} </span>
             <button
                className="rounded-xl"

@@ -13,7 +13,7 @@ function Row({ children, className }: RowProps) {
 function LabelRow({ children, className }: RowProps) {
    return (
       <label
-         className={`inline-flex cursor-pointer ${adjustClassName(className)}`}
+         className={`flex cursor-pointer ${adjustClassName(className)}`}
       >
          {children}
       </label>
