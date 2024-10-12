@@ -8,6 +8,8 @@ type TabProps<T> = {
    activeTab: T;
    setActiveTab: Dispatch<SetStateAction<T>>;
    tabTitle: T;
+
+   setTriggerAnimnation: Dispatch<SetStateAction<boolean>>;
 };
 
 function Tab<T>({
@@ -16,11 +18,16 @@ function Tab<T>({
    style,
    activeTab,
    setActiveTab,
-   tabTitle
+   tabTitle,
+
+   setTriggerAnimnation
 }: TabProps<T>) {
    className ??= "";
    const onClick = () => {
-      setActiveTab(tabTitle);
+      setTriggerAnimnation((s) => !s);
+      setTimeout(() => {
+         setActiveTab(tabTitle);
+      }, 250);
    };
    return (
       <button

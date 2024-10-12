@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./layout/Layout";
-import { HomePage } from "./pages/HomePage";
+import { MobdevicePage } from "./pages/mob device/MobdevicePage";
 
 function Router() {
    return (
       <BrowserRouter>
          <Routes>
-            <Route path="/" element={<Layout />}>
-               <Route path="" index element={<HomePage />} />
+            <Route path="/"element={<Layout />}>
+               <Route path="/mobdevice" index element={<MobdevicePage />} />
             </Route>
          </Routes>
       </BrowserRouter>
