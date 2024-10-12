@@ -12,12 +12,15 @@ import { Checkbox } from "../components/ui/Checkbox";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useTranslation } from "react-i18next";
+import { Tab } from "../components/ui/Tab";
 
 ////// Experimental
 // import strawHat from "../assets/Straw Hat Icon 147411.svg";
 // import { StrawHatIcon } from "../customIcons/StrawHatIcon.tsx";
 
 function HomePage() {
+   const [mode, setMode] = useState<"day" | "month">("day");
+
    const [total, setTotal] = useState<number | "">("");
    const [services, setServices] = useState<number | "">("");
 
@@ -33,7 +36,7 @@ function HomePage() {
 
    // Test TO DELETE
 
-   const {t} = useTranslation();
+   const { t } = useTranslation();
 
    const [isChecked, setIsChecked] = useState(false);
    const currency = useSelector((store: RootState) => store.settings.currency);
@@ -41,14 +44,17 @@ function HomePage() {
    return (
       <>
          <h1 className="font-bold text-center mb-8 mt-8 md:mt-24">
-            Mobdevice Revenue {t("settings.settingsTitle")}
+            Mobdevice Revenue
          </h1>
+         <Row className="justify-center md:max-w-[650px] mx-auto mb-2">
+            <Tab activeTab={mode} setActiveTab={setMode} tabTitle="day">
+               Day
+            </Tab>
+            <Tab activeTab={mode} setActiveTab={setMode} tabTitle="month">
+               Month
+            </Tab>
+         </Row>
          <ContentBox className="flex flex-col gap-4 md:max-w-[650px] mx-auto">
-            <Row className="items-center">
-               <span>Підрахунок </span>
-               <Button>Day</Button>
-               <Button>Month</Button>
-            </Row>
             <Row32>
                <Col>
                   <LabelRow className="gap-2 self-start">
