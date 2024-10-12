@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import { useEffect } from "react";
+import i18next from "i18next";
 
 type SettingsProps = {
    children: React.ReactNode;
@@ -17,16 +18,28 @@ function Settings({ children }: SettingsProps) {
    const { theme, fontSize, language, currency, customCurrencyList } =
       useSelector((store: RootState) => store.settings);
 
+
+   // Language trigger
+   const languageMap = new Map().set("ukrainian", "uk").set("english", "en");
    useEffect(() => {
-      localStorage.setItem("storageTheme", theme);
-      localStorage.setItem("storageFontSize", fontSize);
+      i18next.changeLanguage(languageMap.get(language));
       localStorage.setItem("storageLanguage", language);
-      localStorage.setItem("storageCurrency", currency);
+   }, [language]);
+
+   // CustomCurrency trigger
+   useEffect(() => {
       localStorage.setItem(
          "storageCustomCurrencyList",
          JSON.stringify(customCurrencyList)
       );
-   }, [theme, fontSize, language, currency, customCurrencyList]);
+   }, [customCurrencyList]);
+
+   // Other settings trigger
+   useEffect(() => {
+      localStorage.setItem("storageTheme", theme);
+      localStorage.setItem("storageFontSize", fontSize);
+      localStorage.setItem("storageCurrency", currency);
+   }, [theme, fontSize, currency]);
 
    return (
       <div className={`h-full ${theme}Theme`} style={{ fontSize }}>

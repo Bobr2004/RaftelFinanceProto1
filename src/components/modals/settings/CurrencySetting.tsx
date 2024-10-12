@@ -15,7 +15,12 @@ import { v4 as generateId } from "uuid";
 import { InputField } from "../../ui/InputField";
 import { useState } from "react";
 import { handleTextInput } from "../../../functions/inputHandlers";
-import { faCheck, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+   faCheck,
+   faPlus,
+   faTrash,
+   faXmark
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function CurrencySetting() {
@@ -74,7 +79,7 @@ function AddNewCurrencyForm({ setIsAddMode }: AddNewCurrencyFormType) {
          return;
       }
       for (let curEl of currencyArray) {
-         if (curEl.length < 1) {
+         if (curEl.length < 1 || curEl.length > 4) {
             setError("Неправильний формат вводу даних");
             return;
          }
@@ -98,8 +103,11 @@ function AddNewCurrencyForm({ setIsAddMode }: AddNewCurrencyFormType) {
                onChange={handleTextInput(setCustomCurrency)}
                info={`Формат: ${currency}`}
             />
-            <Button className="py-3" onClick={submitCustomCurrency}>
-               <FontAwesomeIcon icon={faCheck} />
+            <Button
+               className="py-3 w-12 text-center"
+               onClick={submitCustomCurrency}
+            >
+               <FontAwesomeIcon icon={customCurrency ? faCheck : faXmark} />
             </Button>
          </Row>
          <div className="text-red-500 -my-2 ml-1" style={{ fontSize: "0.8em" }}>

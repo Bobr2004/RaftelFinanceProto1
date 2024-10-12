@@ -1,0 +1,14 @@
+{
+   "welcome": "Welcome",
+   "settings": {
+      "settingsTitle": "Settings",
+      "themeChange": "Change theme",
+      "dark": "Dark",
+      "light": "Light",
+      "fontSize": "Font size",
+      "selectedLanguage": "Selected language",
+      "selectedCurrency": "Selected currency",
+      "currency": "Currency",
+      "currencyFormat": "Currency format"
+   }
+}

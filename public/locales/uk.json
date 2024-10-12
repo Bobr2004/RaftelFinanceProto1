@@ -1,0 +1,14 @@
+{
+   "welcome": "Ласкаво просимо",
+   "settings": {
+      "settingsTitle": "Налаштування",
+      "themeChange": "Змінити тему",
+      "dark": "Темна",
+      "light": "Світла",
+      "fontSize": "Розмір шрифту",
+      "selectedLanguage": "Обрана мова",
+      "selectedCurrency": "Обрана валюта",
+      "currency": "Валюта",
+      "currencyFormat": "Формат валюти"
+   }
+}

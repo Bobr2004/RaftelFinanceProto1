@@ -11,6 +11,7 @@ import { Button } from "../components/ui/Button";
 import { Checkbox } from "../components/ui/Checkbox";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { useTranslation } from "react-i18next";
 
 ////// Experimental
 // import strawHat from "../assets/Straw Hat Icon 147411.svg";
@@ -31,13 +32,16 @@ function HomePage() {
    };
 
    // Test TO DELETE
+
+   const {t} = useTranslation();
+
    const [isChecked, setIsChecked] = useState(false);
    const currency = useSelector((store: RootState) => store.settings.currency);
    const [_, currencyName] = parseCurrency(currency);
    return (
       <>
          <h1 className="font-bold text-center mb-8 mt-8 md:mt-24">
-            Mobdevice Revenue
+            Mobdevice Revenue {t("settings.settingsTitle")}
          </h1>
          <ContentBox className="flex flex-col gap-4 md:max-w-[650px] mx-auto">
             <Row className="items-center">
@@ -70,7 +74,6 @@ function HomePage() {
                      value={services}
                      onChange={handleNumberInput(setServices)}
                      display={displayRevenue(servicesRevenue)}
-
                   />
 
                   <OpenClose
@@ -89,9 +92,11 @@ function HomePage() {
                   <ResultBox>{round2Digits(resultRevenue)}</ResultBox>
                </Col>
             </Row32>
-            <Row className="justify-between C-textSoft text-sm">
-               <span>Київ, Лятошинського 14</span>{" "}
-               <span>Автор таблиці: ???</span>
+            <Row className="justify-between C-textSoft">
+               <span style={{ fontSize: "0.875em" }}>
+                  Київ, Лятошинського 14
+               </span>{" "}
+               <span style={{ fontSize: "0.875em" }}>Автор таблиці: ???</span>
             </Row>
          </ContentBox>
       </>
