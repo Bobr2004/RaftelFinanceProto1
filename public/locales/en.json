@@ -10,5 +10,7 @@
       "selectedCurrency": "Selected currency",
       "currency": "Currency",
       "currencyFormat": "Currency format"
-   }
+   },
+   "calculation": {},
+   "bill": {}
 }

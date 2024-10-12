@@ -22,15 +22,17 @@ import {
    faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from "react-i18next";
 
 function CurrencySetting() {
+   const { t } = useTranslation();
    const customCurrencyList = useSelector(
       (store: RootState) => store.settings.customCurrencyList
    );
    const [isAddMode, setIsAddMode] = useState(false);
    return (
       <Row23 className={`items-start`}>
-         <span className="mt-1">Вибір валюти</span>
+         <span className="mt-1">{t("settings.selectedCurrency")}</span>
          <Row className="flex-wrap">
             <ChangeCurrencyButton currency="UAH-грн-₴" />
             <ChangeCurrencyButton currency="USD-dol-$" />
@@ -59,6 +61,8 @@ type AddNewCurrencyFormType = {
 };
 
 function AddNewCurrencyForm({ setIsAddMode }: AddNewCurrencyFormType) {
+   const { t } = useTranslation();
+
    const currency = useSelector((store: RootState) => store.settings.currency);
    const [customCurrency, setCustomCurrency] = useState("");
    const [error, setError] = useState("");
@@ -75,12 +79,12 @@ function AddNewCurrencyForm({ setIsAddMode }: AddNewCurrencyFormType) {
 
       const currencyArray = customCurrency.split("-");
       if (currencyArray.length !== 3) {
-         setError("Неправильний формат вводу даних");
+         setError(t("settings.currencyFormat"));
          return;
       }
       for (let curEl of currencyArray) {
          if (curEl.length < 1 || curEl.length > 4) {
-            setError("Неправильний формат вводу даних");
+            setError(t("settings.currencyFormat"));
             return;
          }
       }
@@ -98,10 +102,10 @@ function AddNewCurrencyForm({ setIsAddMode }: AddNewCurrencyFormType) {
       <>
          <Row className="justify-between items-start">
             <InputField
-               name="Валюта"
+               name={t("settings.currency")}
                value={customCurrency}
                onChange={handleTextInput(setCustomCurrency)}
-               info={`Формат: ${currency}`}
+               info={`${t("settings.currencyFormat")}: ${currency}`}
             />
             <Button
                className="py-3 w-12 text-center"

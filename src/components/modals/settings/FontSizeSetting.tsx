@@ -3,11 +3,14 @@ import { changeFontSize } from "../../../store/settingsSlice";
 import { Row, Row23 } from "../../positional/Rows";
 import { Button } from "../../ui/Button";
 import { RootState } from "../../../store/store";
+import { useTranslation } from "react-i18next";
 
 function FontSizeSetting() {
+   const { t } = useTranslation();
+
    return (
       <Row23 className="items-center">
-         <span>Розмір Шрифту</span>
+         <span>{t("settings.fontSize")}</span>
          <Row className="flex-wrap">
             {/* <ChangeFontSizeButton fontSize="12px" /> */}
             <ChangeFontSizeButton fontSize="14px" />

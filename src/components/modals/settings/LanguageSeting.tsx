@@ -3,14 +3,21 @@ import { changeLanguage } from "../../../store/settingsSlice";
 import { Row, Row23 } from "../../positional/Rows";
 import { Button } from "../../ui/Button";
 import { RootState } from "../../../store/store";
+import { useTranslation } from "react-i18next";
 
 function LanguageSetting() {
+   const { t } = useTranslation();
+
    return (
       <Row23 className="items-center">
-         <span>Вибір мови</span>
+         <span>{t("settings.selectedLanguage")}</span>
          <Row className="flex-wrap">
-            <ChangeLanguageButton language="ukrainian">Українська</ChangeLanguageButton>
-            <ChangeLanguageButton language="english">English</ChangeLanguageButton>
+            <ChangeLanguageButton language="ukrainian">
+               Українська
+            </ChangeLanguageButton>
+            <ChangeLanguageButton language="english">
+               English
+            </ChangeLanguageButton>
          </Row>
       </Row23>
    );
@@ -21,7 +28,10 @@ type ChangeLanguageButtonProps = {
    language: "ukrainian" | "english";
 };
 
-function ChangeLanguageButton({ children, language }: ChangeLanguageButtonProps) {
+function ChangeLanguageButton({
+   children,
+   language
+}: ChangeLanguageButtonProps) {
    const dispatch = useDispatch();
    const currentLanguage = useSelector(
       (store: RootState) => store.settings.language
