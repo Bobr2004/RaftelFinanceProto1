@@ -12,7 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Tab } from "../../components/ui/Tab";
 import "./animations.scss";
-import { openDescription } from "../../store/modalsSlice";
+import { openBill, openDescription } from "../../store/modalsSlice";
+import { Button } from "../../components/ui/Button";
 
 ////// Experimental
 // import strawHat from "../assets/Straw Hat Icon 147411.svg";
@@ -67,10 +68,36 @@ function MobdevicePage() {
       triggerBlur();
    }, [triggerAnimation]);
 
+   useEffect(() => {
+      clearFields();
+   }, [mode]);
+
+   const calculateRevenueObject = () => {
+      const resultObject: any = {};
+      resultObject["Ставка:"] = 350;
+      if (mode === "month") {
+         resultObject["Відпрацьовано днів:"] = Number(days);
+         resultObject["Плата за ставку:"] = Number(days) * 350;
+      }
+      if (!isAdvancedMode) {
+         resultObject["Відсоток за товари:"] = productsRevenue;
+         resultObject["Відсоток за годинники:"] = powerBanksRevenue;
+      } else {
+         resultObject["Відсоток з каси:"] = totalSimpleRevenue;
+      }
+      resultObject["Плата за послуги:"] = servicesRevenue;
+      resultObject["Сума:"] = resultRevenue;
+
+      return resultObject;
+   };
+
    const calculateResultRevenue = () => {
+      const resultObject: any = { rate: 350 };
       let rateRevenue = 350;
       if (mode === "month") {
          rateRevenue *= Number(days);
+         resultObject["days"] = Number(days);
+         resultObject["rateRevenue"] = rateRevenue;
       }
 
       let totalRevenue = 0;
@@ -78,7 +105,10 @@ function MobdevicePage() {
          totalRevenue = productsRevenue + powerBanksRevenue + servicesRevenue;
       } else {
          totalRevenue = totalSimpleRevenue + servicesRevenue;
+         resultObject["totalSimpleRevenue"] = totalSimpleRevenue;
       }
+
+      resultObject["servicesRevenue"] = servicesRevenue;
 
       return rateRevenue + totalRevenue;
    };
@@ -87,6 +117,14 @@ function MobdevicePage() {
    const displayRevenue = (revenue: number) => {
       if (!round2Digits(revenue)) return "";
       return `${round2Digits(revenue)} ${currencyName}`;
+   };
+
+   const clearFields = () => {
+      setDays("");
+      setTotalSimple("");
+      setServices("");
+      setProducts("");
+      setPowerBanks("");
    };
 
    // Test TO DELETE
@@ -177,7 +215,11 @@ function MobdevicePage() {
                      title="Додатково "
                      className="gap-2 self-start w-full"
                   >
-                     <span>Antoha</span>
+                     <Col>
+                        <div>Tips</div>
+                        <div>Bonuses</div>
+                        <div>Taxes</div>
+                     </Col>
                      {/* <InputField
                         name="Чайові"
                         value={total}
@@ -201,7 +243,23 @@ function MobdevicePage() {
                      </span>
                      <span>{description}</span>
                   </div>
-                  <ResultBox>{round2Digits(resultRevenue)}</ResultBox>
+                  <ResultBox
+                     onClick={() =>
+                        dispatch(openBill(calculateRevenueObject()))
+                     }
+                  >
+                     {round2Digits(resultRevenue)}
+                  </ResultBox>
+                  <div className="text-center">
+                     <Button
+                        className="!px-12"
+                        onClick={() => {
+                           clearFields();
+                        }}
+                     >
+                        Clear
+                     </Button>
+                  </div>
                </Col>
             </Row32>
             <Row className="justify-between C-textSofter">

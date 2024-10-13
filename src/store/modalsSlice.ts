@@ -1,13 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type modalsSliceType = {
    isOpen: boolean;
    type: "settings" | "bill" | "description" | "";
+   data: any;
 };
 
 const initialState: modalsSliceType = {
    isOpen: false,
-   type: ""
+   type: "",
+   data: null
 };
 
 const modalsSlice = createSlice({
@@ -18,9 +20,12 @@ const modalsSlice = createSlice({
          state.isOpen = true;
          state.type = "settings";
       },
-      openBill(state) {
+      openBill(state, action: PayloadAction<any>) {
          state.isOpen = true;
          state.type = "bill";
+         console.log(action);
+         state.data = action.payload;
+         console.log(state.data);
       },
       openDescription(state) {
          state.isOpen = true;
@@ -29,9 +34,11 @@ const modalsSlice = createSlice({
       closeModals(state) {
          state.isOpen = false;
          state.type = "";
+         state.data = null;
       }
    }
 });
 
-export const { openSettings, openBill, closeModals, openDescription } = modalsSlice.actions;
+export const { openSettings, openBill, closeModals, openDescription } =
+   modalsSlice.actions;
 export const modalsSliceReducer = modalsSlice.reducer;

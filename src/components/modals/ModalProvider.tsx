@@ -3,9 +3,11 @@ import { RootState } from "../../store/store";
 import { Overlay } from "./Overlay";
 import { SettingsModal } from "./settings/SettingsModal";
 import { DescriptionModal } from "./description/DescriptionModal";
+import { BillModal } from "./bill/BillModal";
 
 function ModalProvider() {
-   const { isOpen, type } = useSelector((store: RootState) => store.modals);
+   const { isOpen, type, data } = useSelector((store: RootState) => store.modals);
+
    if (!isOpen) return;
    switch (type) {
       case "settings":
@@ -19,6 +21,7 @@ function ModalProvider() {
          return (
             <>
                <Overlay />
+               <BillModal {...{data}}/>
             </>
          );
       case "description":

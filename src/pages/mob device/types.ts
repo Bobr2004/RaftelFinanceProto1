@@ -4,7 +4,6 @@ type paymentType = {
    name: string;
    percentage: number;
 
-
    // optional
    base?: boolean;
    secondary?: boolean;
@@ -39,4 +38,6 @@ const payments: paymentType[] = [
    { id: 1233, order: 3, name: "Годинники", percentage: 5 },
    { id: 1234, order: 4, name: "Послуги", percentage: 50, secondary: true }
 ];
+export { payments };
 
+export type { TradeMark };
