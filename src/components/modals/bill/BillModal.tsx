@@ -1,5 +1,5 @@
-import { Col } from "../positional/Cols";
-import { ContentBox } from "../ui/ContentBox";
+import { Col } from "../../positional/Cols";
+import { ContentBox } from "../../ui/ContentBox";
 
 function BillModal() {
    return (

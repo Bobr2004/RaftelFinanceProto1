@@ -40,16 +40,3 @@ const payments: paymentType[] = [
    { id: 1234, order: 4, name: "Послуги", percentage: 50, secondary: true }
 ];
 
-const initialState: RaftableType = {
-   rate: 350,
-   days: 1,
-   payments,
-   bonuses: [],
-   expanses: []
-};
-
-type actionType = {
-   type: string;
-   payload: number;
-};
-

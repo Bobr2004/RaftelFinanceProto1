@@ -32,11 +32,13 @@ function ChangeLanguageButton({
    children,
    language
 }: ChangeLanguageButtonProps) {
+   // Redux
    const dispatch = useDispatch();
    const currentLanguage = useSelector(
       (store: RootState) => store.settings.language
    );
 
+   // Inner state
    const isActive = currentLanguage === language;
 
    const languageChange = (language: "ukrainian" | "english") => {

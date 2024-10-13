@@ -12,5 +12,8 @@
       "currencyFormat": "Currency format"
    },
    "calculation": {},
-   "bill": {}
+   "bill": {},
+   "description": {
+      "descriptionTitle": "Description"
+   }
 }

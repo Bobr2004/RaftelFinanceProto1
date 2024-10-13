@@ -8,10 +8,11 @@ import { ResultBox } from "../../components/ui/ResultBox";
 import { parseCurrency, round2Digits } from "../../functions/helpers";
 import { OpenClose } from "../../components/ui/OpenClose";
 import { Checkbox } from "../../components/ui/Checkbox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Tab } from "../../components/ui/Tab";
 import "./animations.scss";
+import { openDescription } from "../../store/modalsSlice";
 
 ////// Experimental
 // import strawHat from "../assets/Straw Hat Icon 147411.svg";
@@ -21,6 +22,7 @@ function MobdevicePage() {
    // Redux state
    const currency = useSelector((store: RootState) => store.settings.currency);
    const [_, currencyName] = useMemo(() => parseCurrency(currency), [currency]);
+   const dispatch = useDispatch();
 
    // API data
    const description = `Заробітна плата в магазині мобільних аксесуарів MobDevice
@@ -185,8 +187,19 @@ function MobdevicePage() {
                   </OpenClose>
                </Col>
                <Col>
-                  <div className="border C-borderBox h-16 overflow-hidden shadow-[inset_0_-2px_4px_rgba(0,0,0,0.6)] p-2">
-                     {description}
+                  <div
+                     onClick={() => {
+                        dispatch(openDescription());
+                     }}
+                     className="relative border C-borderBox h-16 overflow-hidden p-2 cursor-pointer descriptionBox"
+                  >
+                     <span
+                        className="absolute bottom-2 right-2"
+                        style={{ fontSize: "1.5em" }}
+                     >
+                        ...
+                     </span>
+                     <span>{description}</span>
                   </div>
                   <ResultBox>{round2Digits(resultRevenue)}</ResultBox>
                </Col>

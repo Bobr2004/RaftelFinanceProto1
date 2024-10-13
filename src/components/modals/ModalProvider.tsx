@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Overlay } from "./Overlay";
 import { SettingsModal } from "./settings/SettingsModal";
+import { DescriptionModal } from "./description/DescriptionModal";
 
 function ModalProvider() {
    const { isOpen, type } = useSelector((store: RootState) => store.modals);
@@ -18,6 +19,13 @@ function ModalProvider() {
          return (
             <>
                <Overlay />
+            </>
+         );
+      case "description":
+         return (
+            <>
+               <Overlay />
+               <DescriptionModal />
             </>
          );
    }
