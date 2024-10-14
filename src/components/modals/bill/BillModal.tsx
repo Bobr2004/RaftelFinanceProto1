@@ -42,7 +42,7 @@ function BillModal({ data }: { data: any }) {
    return (
       <ModalTemplate title={"Розрахунковий чек"}>
          <Row32>
-            <div className="!bg-white !text-black text-sm flex flex-col gap-1 p-4 w-[300px]">
+            <div className="!bg-white !text-black text-sm flex flex-col gap-1 p-4 w-[300px] border C-borderBox">
                <div className="text-center">
                   <h4>ТОВ ОТК "Raftel"</h4>
                   <div>м.Київ, вул.Максимовчиа, 28</div>

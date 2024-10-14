@@ -12,7 +12,7 @@ type ModalTemplate = {
 
 function ModalTemplate({ children, title }: ModalTemplate) {
    return (
-      <div className="C-textBase absoluteCenter p-6 z-30 w-full max-w-[600px]">
+      <div className="C-textBase fixedCenter p-6 z-30 w-full max-w-[600px]">
          <ContentBox className="w-full relative min-h-40 max-h-[calc(100vh-4rem)] overflow-y-scroll">
             <CloseButton />
             <h2 className="text-center mb-8">{title}</h2>

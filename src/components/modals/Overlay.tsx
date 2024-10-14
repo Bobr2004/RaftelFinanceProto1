@@ -30,7 +30,7 @@ function Overlay({ children }: OverlayProps) {
    };
    return (
       <div
-         className="absolute z-20 inset-0 w-screen h-screen bg-black opacity-40 "
+         className="fixed z-20 inset-0 w-screen h-screen bg-black opacity-40 "
          onClick={onOverlayClick}
       >
          {children}
