@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Col } from "../../positional/Cols";
 import { ModalTemplate } from "../ModalTemplate";
 import { RootState } from "../../../store/store";
@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faShare } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "../../ui/Checkbox";
+import { toPng } from "html-to-image";
 
 type paymentType = {
    name: string;
@@ -67,55 +68,105 @@ function BillModal({ data }: { data: megaNigger }) {
       );
    }, []);
 
+   const receiptRef = useRef<HTMLDivElement>(null);
+
+   const [shareError, setShareError] = useState(false);
+
+   const downloadReceiptAsImage = async () => {
+      if (receiptRef.current === null) {
+         return;
+      }
+      try {
+         const dataUrl = await toPng(receiptRef.current);
+         const link = document.createElement("a");
+         link.href = dataUrl;
+         link.download = `receipt${day}.${month}.png`;
+         document.body.appendChild(link);
+         link.click();
+         document.body.removeChild(link);
+      } catch (error) {
+         console.error("Failed to generate image", error);
+      }
+   };
+
+   const shareReceiptAsImage = async () => {
+      if (receiptRef.current === null) {
+         return;
+      }
+
+      try {
+         const dataUrl = await toPng(receiptRef.current);
+         if (
+            navigator.canShare &&
+            navigator.canShare({ files: [new File([], "receipt.png")] })
+         ) {
+            const response = await fetch(dataUrl);
+            const blob = await response.blob();
+            const file = new File([blob], `receipt${day}.${month}.png`, { type: "image/png" });
+
+            console.log(file)
+
+            await navigator.share({
+               files: [file],
+               title: "Receipt"
+            });
+         } else {
+            setShareError(true);
+         }
+      } catch (error) {
+         console.error("Failed to generate image", error);
+      }
+   };
+
    return (
       <ModalTemplate title={t("bill.billTitle")}>
          <Row32>
             {/* <div className="flex justify-center"> */}
-               <div className="overflow-x-scroll border C-borderBox flex justify-center">
-                  <div className="!bg-white !text-black text-[14px] flex flex-col gap-1 p-4 w-[300px] ">
-                     <div className="text-center">
-                        <h4>ТОВ ОТК "Raftel"</h4>
-                        <div>м.Київ, вул.Максимовчиа, 28</div>
-                        <div>{t("bill.phone")} 098337281</div>
-                        <div>ПН 39571623222</div>
-                     </div>
-                     <BillDivider />
-                     {/* {JSON.stringify(data)} */}
-                     <ul className="billList">
-                        {rateRevenue}
-                        {paymentsList &&
-                           paymentsList.map((el: any, i: any) => (
-                              <li key={i}>
-                                 <BillComplexRow
-                                    name={el.name}
-                                    value={el.value}
-                                    percentage={el.percentage}
-                                    isSimplifiedForm={isSimplifiedForm}
-                                 />
-                              </li>
-                           ))}
-                        <li>
-                           <BillRow
-                              name={t("bill.result")}
-                              value={data.result}
-                           />
-                        </li>
-                     </ul>
-                     <div>
-                        <BillDivider />
-                        <BillRecevier receiver={receiver} />
-                     </div>
-                     <p className="flex justify-between">
-                        <span>
-                           {t("bill.date")}: {day}.{month}.{year}
-                        </span>{" "}
-                        <span>
-                           {t("bill.time")}: {time}
-                        </span>
-                     </p>
-                     <p className="text-center">{t("bill.fiscalСheck")}</p>
+            <div className="overflow-x-scroll border C-borderBox flex justify-center">
+               <div
+                  className="!bg-white !text-black text-[14px] flex flex-col gap-1 p-4 w-[300px] "
+                  ref={receiptRef}
+               >
+                  <div className="text-center">
+                     <h4>ТОВ ОТК "Raftel"</h4>
+                     <div>м.Київ, вул.Максимовчиа, 28</div>
+                     <div>{t("bill.phone")} 098337281</div>
+                     <div>ПН 39571623222</div>
                   </div>
+                  <BillDivider />
+                  {/* {JSON.stringify(data)} */}
+                  <ul className="billList">
+                     {rateRevenue}
+                     {paymentsList &&
+                        paymentsList.map((el: any, i: any) => (
+                           <li key={i}>
+                              <BillComplexRow
+                                 name={el.name}
+                                 value={el.value}
+                                 percentage={el.percentage}
+                                 isSimplifiedForm={isSimplifiedForm}
+                              />
+                           </li>
+                        ))}
+                     <li>
+                        <BillRow name={t("bill.result")} value={data.result} />
+                     </li>
+                  </ul>
+                  <div>
+                     <BillDivider />
+                     <BillRecevier receiver={receiver} />
+                  </div>
+                  <p className="flex justify-between">
+                     <span>
+                        {t("bill.date")}: {day}.{month}.{year}
+                     </span>{" "}
+                     <span>
+                        {t("bill.time")}: {time}
+                     </span>
+                  </p>
+                  <p className="text-center">{t("bill.fiscalСheck")}</p>
                </div>
+            </div>
             {/* </div> */}
             <Col>
                <LabelRow className="gap-2 self-start">
@@ -133,11 +184,19 @@ function BillModal({ data }: { data: megaNigger }) {
                   value={receiver}
                   onChange={handleTextInput(setReceiver)}
                />
-               <Button>
+               <Button onClick={shareReceiptAsImage}>
                   {t("bill.share")}{" "}
                   <FontAwesomeIcon icon={faShare} className="ml-3" />
                </Button>
-               <Button>
+               {shareError && (
+                  <div
+                     className="text-red-500 -my-2 ml-1 text-center"
+                     style={{ fontSize: "0.8em" }}
+                  >
+                     {t("bill.notSupported")}
+                  </div>
+               )}
+               <Button onClick={downloadReceiptAsImage}>
                   {t("bill.save")}{" "}
                   <FontAwesomeIcon icon={faSave} className="ml-3" />
                </Button>

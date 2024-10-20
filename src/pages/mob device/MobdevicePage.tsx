@@ -43,6 +43,7 @@ type paymentInputType = {
    base?: boolean;
    secondary?: boolean;
    value: "" | number;
+   info?: string;
 };
 
 function MobdevicePage() {
@@ -243,6 +244,7 @@ function MobdevicePage() {
                               value={py.value}
                               onChange={changeValue(py.id)}
                               display={py.base ? baseRevenue : getRevenue(py)}
+                              info={py.info}
                            />
                         </li>
                      ))}

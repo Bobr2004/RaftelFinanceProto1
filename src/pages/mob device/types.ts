@@ -3,6 +3,7 @@ type paymentType = {
    order: number;
    name: string;
    percentage: number;
+   info?: string;
 
    // optional
    base?: boolean;
@@ -44,7 +45,14 @@ export { payments };
 export type { TradeMark };
 
 const TeremkyPayments: paymentType[] = [
-   { id: 1231, order: 0, name: "Каса", percentage: 6, base: true },
+   {
+      id: 1231,
+      order: 0,
+      name: "Каса",
+      percentage: 6,
+      base: true,
+      info: "Вся каса враховуючи послуги та різні типи товарів*"
+   },
    { id: 1238, order: 1, name: "Товари", percentage: 6 },
    { id: 1232, order: 2, name: "Павербанки та годиннки", percentage: 5 },
    { id: 1234, order: 4, name: "Послуги", percentage: 50, secondary: true }
@@ -60,7 +68,7 @@ const TeremkyRaftable: RaftableType = {
    payments: TeremkyPayments
 };
 
-export {TeremkyRaftable}
+export { TeremkyRaftable };
 
 // Example data
 const TradeMark: TradeMarkType = {

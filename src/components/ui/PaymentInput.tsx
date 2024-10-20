@@ -45,7 +45,7 @@ function PaymentInput({
             </div>
             {display !== undefined && (
                <span className="C-textSofter overflow-x-scroll whitespace-nowrap">
-                  {display ? `+${display}${currencyName}`: ""}
+                  {display ? `+ ${display} ${currencyName}`: ""}
                </span>
             )}
          </div>

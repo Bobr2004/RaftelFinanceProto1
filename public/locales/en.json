@@ -48,6 +48,9 @@
       "optional": "Optional",
       "recipient": "Recipient",
       "share": "Share",
+      "notSupported": "Not supported on your device",
+
+
       "save": "Save",
       "date": "Date",
       "time": "Time",
