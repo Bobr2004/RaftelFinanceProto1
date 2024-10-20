@@ -16,7 +16,7 @@
       "month": "Month",
 
       "rate": "Rate",
-      "simplifiedCalculation": "Simplified calculation",
+      "simplifiedCalculation": "Simplified Calculation",
       "numberOfDays": "Number of days",
       "optional": "Optional",
       "tips": "Tips",
@@ -32,13 +32,18 @@
       "tableAuthor": "Table author"
    },
    "bill": {
-      "billTitle": "Receipt",
+      "billTitle": "Receipt", 
+
       "revenue": "revenue",
       "total": "Total",
+      "percentage": "Percentage",
       "rate": "Rate",
       "days": "Number of days",
       "rateRevenue": "Rate revenue",
       "result": "Result",
+
+      "simpleForm": "Simple form",
+
 
       "optional": "Optional",
       "recipient": "Recipient",

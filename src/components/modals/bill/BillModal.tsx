@@ -74,7 +74,7 @@ function BillModal({ data }: { data: megaNigger }) {
                <div className="text-center">
                   <h4>ТОВ ОТК "Raftel"</h4>
                   <div>м.Київ, вул.Максимовчиа, 28</div>
-                  <div>тел. 098337281</div>
+                  <div>{t("bill.phone")} 098337281</div>
                   <div>ПН 39571623222</div>
                </div>
                <BillDivider />
@@ -102,15 +102,17 @@ function BillModal({ data }: { data: megaNigger }) {
                </div>
                <p className="flex justify-between">
                   <span>
-                     Дата: {day}.{month}.{year}
+                     {t("bill.date")}: {day}.{month}.{year}
                   </span>{" "}
-                  <span>Час: {time}</span>
+                  <span>
+                     {t("bill.time")}: {time}
+                  </span>
                </p>
-               <p className="text-center">Фіксальний чек</p>
+               <p className="text-center">{t("bill.fiscalСheck")}</p>
             </div>
             <Col>
                <LabelRow className="gap-2 self-start">
-                  <span>{t("calculation.simplifiedCalculation")}</span>
+                  <span>{t("bill.simpleForm")}</span>
                   <Checkbox
                      isChecked={isSimplifiedForm}
                      onChange={() => {
@@ -119,16 +121,18 @@ function BillModal({ data }: { data: megaNigger }) {
                   />
                </LabelRow>
                <InputField
-                  name="Отримувач"
+                  name={t("bill.recipient")}
                   info="Необовʼязково"
                   value={receiver}
                   onChange={handleTextInput(setReceiver)}
                />
                <Button>
-                  Поділитися <FontAwesomeIcon icon={faShare} className="ml-3" />
+                  {t("bill.share")}{" "}
+                  <FontAwesomeIcon icon={faShare} className="ml-3" />
                </Button>
                <Button>
-                  Зберегти <FontAwesomeIcon icon={faSave} className="ml-3" />
+                  {t("bill.save")}{" "}
+                  <FontAwesomeIcon icon={faSave} className="ml-3" />
                </Button>
             </Col>
          </Row32>
@@ -141,11 +145,16 @@ function BillDivider() {
 }
 
 function BillRecevier({ receiver }: { receiver: string }) {
+   const { t } = useTranslation();
    if (!receiver) return;
    return (
       <>
-         <p>Отримувач: {receiver}</p>
-         <BillDivider />
+         <p className="-mt-1 flex gap-1">
+            <span>{t("bill.recipient")}:</span> <span>{receiver}</span>
+         </p>
+         <p className="-mt-1">
+            <BillDivider />
+         </p>
       </>
    );
 }
@@ -155,7 +164,7 @@ function BillRow({ name, value }: { name: string; value: any }) {
    const [_, currencyName] = useMemo(() => parseCurrency(currency), [currency]);
    return (
       <div className="flex justify-between gap-1">
-         <span>{name}</span>{" "}
+         <span>{name}:</span>{" "}
          <span className="font-medium text-nowrap">{`${value} ${currencyName}`}</span>
       </div>
    );
@@ -174,8 +183,8 @@ function BillSubRow({
    const [_, currencyName] = useMemo(() => parseCurrency(currency), [currency]);
    value = noCurrency ? value : `${value} ${currencyName}`;
    return (
-      <div className="flex justify-between gap-1 text-[12px] pl-2 -mt-2">
-         <span> - {name}</span> <span className="text-nowrap">{value}</span>
+      <div className="flex justify-between gap-1 text-[12px] px-2 -mt-2">
+         <span> - {name}:</span> <span className="text-nowrap">{value}</span>
       </div>
    );
 }
@@ -207,7 +216,12 @@ function BillComplexRow({
                name={name}
                value={round2Digits((value * percentage) / 100)}
             />
-            <BillSubRow name={`${t("bill.total")} ${name}`} value={`${value}`} />
+            <BillSubRow name={t("bill.total")} value={`${value}`} />
+            <BillSubRow
+               name={t("bill.percentage")}
+               value={`${percentage}%`}
+               noCurrency
+            />
          </div>
       );
 }

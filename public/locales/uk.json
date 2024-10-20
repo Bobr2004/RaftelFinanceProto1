@@ -33,6 +33,18 @@
    },
    "bill": {
       "billTitle": "Розрахунковий чек",
+
+      "revenue": "Дохід",
+      "total": "Всього",
+      "percentage": "Відсоток",
+      "rate": "Ставка",
+      "days": "Кількість днів",
+      "rateRevenue": "Дохід за ставкою",
+      "result": "Сума",
+
+      "simpleForm": "Проста форма",
+
+
       "optional": "Необовʼязково",
       "recipient": "Отримувач",
       "share": "Поділитися",
@@ -43,6 +55,6 @@
       "fiscalСheck": "Фіскальний чек"
    },
    "description": {
-      "descriptionTitle": "Description"
+      "descriptionTitle": "Опис"
    }
 }

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Button } from "./Button";
 import { RootState } from "../../store/store";
 import { parseCurrency } from "../../functions/helpers";
+import { useTranslation } from "react-i18next";
 
 type ResultBoxProps = {
    children: React.ReactNode;
@@ -9,6 +10,9 @@ type ResultBoxProps = {
 };
 
 function ResultBox({ children, onClick }: ResultBoxProps) {
+
+   const { t } = useTranslation();
+
 
    const currency = useSelector((store: RootState) => store.settings.currency);
    const [_, __, symbol] = parseCurrency(currency);
@@ -18,7 +22,7 @@ function ResultBox({ children, onClick }: ResultBoxProps) {
          <div className="C-bgTotal C-borderBox border py-1 px-3 text-right">
             {children} {symbol}
          </div>
-         <Button onClick={onClick}>Generate Bill</Button>
+         <Button onClick={onClick}>{t("calculation.generateBill")}</Button>
       </div>
    );
 }

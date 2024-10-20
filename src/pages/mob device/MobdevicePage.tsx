@@ -307,9 +307,9 @@ function MobdevicePage() {
             </Row32>
             <Row className="justify-between C-textSofter">
                <span style={{ fontSize: "0.875em" }}>
-                  Київ, Лятошинського 14
+                  {TeremkyRaftable.place}
                </span>{" "}
-               <span style={{ fontSize: "0.875em" }}>Автор таблиці: ???</span>
+               <span style={{ fontSize: "0.875em" }}>{t("calculation.tableAuthor")}: ??</span>
             </Row>
          </ContentBox>
       </>
