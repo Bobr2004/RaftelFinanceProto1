@@ -23,8 +23,7 @@ const modalsSlice = createSlice({
       openBill(state, action: PayloadAction<any>) {
          state.isOpen = true;
          state.type = "bill";
-         state.data = action.payload[0];
-         console.log(state.data);
+         state.data = action.payload;
       },
       openDescription(state) {
          state.isOpen = true;

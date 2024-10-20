@@ -10,10 +10,6 @@ type paymentType = {
    secondary?: boolean;
 };
 
-type BonusType = {
-   name: string;
-   value: number;
-};
 
 type RaftableType = {
    id: string;
@@ -23,8 +19,7 @@ type RaftableType = {
 
    payments: paymentType[];
 
-   bonuses?: BonusType[];
-   expanses?: BonusType[];
+   specialCode?: string;
 };
 
 type TradeMarkType = {
@@ -65,7 +60,9 @@ const TeremkyRaftable: RaftableType = {
    place: "Київ, Лятошинського, 14",
    rate: 350,
 
-   payments: TeremkyPayments
+   payments: TeremkyPayments,
+
+   specialCode: "Strawhat"
 };
 
 export { TeremkyRaftable };

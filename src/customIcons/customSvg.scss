@@ -1,0 +1,41 @@
+.resultBox {
+   .customSvg {
+      .lightTheme & {
+         path:not(.exception) {
+            fill: #8f8f8f;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+         }
+      }
+
+      .darkTheme & {
+         path:not(.exception) {
+            fill: #454545;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+         }
+      }
+   }
+
+   & > button:hover {
+      background: red;
+   }
+
+   &:has(button:hover) > .customSvg {
+      path:not(.exception) {
+         opacity: 1;
+      }
+   }
+}
+
+.StrawHatIcon {
+   path:not(.exception) {
+      fill: #57534e;
+      transition: all 0.3s ease;
+   }
+   &:hover {
+      path:not(.exception) {
+         fill: #d6d3d1;
+      }
+   }
+}

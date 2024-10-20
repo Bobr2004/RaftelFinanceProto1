@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { CSSProperties, useMemo, useRef, useState } from "react";
 import { Col } from "../../positional/Cols";
 import { ModalTemplate } from "../ModalTemplate";
 import { RootState } from "../../../store/store";
@@ -20,6 +20,9 @@ import { useTranslation } from "react-i18next";
 import { Checkbox } from "../../ui/Checkbox";
 import { toPng } from "html-to-image";
 
+import StrawHat from "/images/Strawhat.png";
+import Akagami from "/images/Akagami.png";
+
 type paymentType = {
    name: string;
    value: number | "";
@@ -28,6 +31,7 @@ type paymentType = {
 };
 
 type megaNigger = {
+   specialCode?: string;
    rate: number;
    days: number;
    payments: paymentType[];
@@ -102,9 +106,11 @@ function BillModal({ data }: { data: megaNigger }) {
          ) {
             const response = await fetch(dataUrl);
             const blob = await response.blob();
-            const file = new File([blob], `receipt${day}.${month}.png`, { type: "image/png" });
+            const file = new File([blob], `receipt${day}.${month}.png`, {
+               type: "image/png"
+            });
 
-            console.log(file)
+            console.log(file);
 
             await navigator.share({
                files: [file],
@@ -118,15 +124,31 @@ function BillModal({ data }: { data: megaNigger }) {
       }
    };
 
+   const customBackground = useMemo<CSSProperties>(() => {
+      if (!data.specialCode) return {};
+      switch (data.specialCode) {
+         case "Strawhat":
+            return {
+               background: `url(${StrawHat}) 0% 100% / 50% no-repeat`,
+            };
+         case "Akagami":
+            return {
+               background: `url(${Akagami}) 0% 100% / 50% no-repeat`,
+            };
+      }
+      return {};
+   }, []);
+
    return (
       <ModalTemplate title={t("bill.billTitle")}>
          <Row32>
             {/* <div className="flex justify-center"> */}
             <div className="overflow-x-scroll border C-borderBox flex justify-center">
                <div
-                  className="!bg-white !text-black text-[14px] flex flex-col gap-1 p-4 w-[300px] "
+                  className="!bg-white !text-black text-[14px] flex flex-col gap-1 p-4 w-[300px] relative z-40"
                   ref={receiptRef}
                >
+                  <div className="absolute opacity-20 inset-0 z-10" style={customBackground}></div>
                   <div className="text-center">
                      <h4>ТОВ ОТК "Raftel"</h4>
                      <div>м.Київ, вул.Максимовчиа, 28</div>

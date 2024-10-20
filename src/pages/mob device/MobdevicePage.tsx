@@ -164,23 +164,23 @@ function MobdevicePage() {
    };
 
    const calculateRevenueObject = () => {
-      const revenueObj = [
-         {
-            rate,
-            days: mode === "month" ? days : 0,
-            payments: displayInputs.map((py) => {
-               return {
-                  name: py.name,
-                  value: py.value,
-                  percentage: py.percentage,
-                  order: py.order
-               };
-            }),
-            bonuses: [],
-            expenses: [],
-            result: calculateResultRevenue()
-         }
-      ];
+      const revenueObj = {
+         specialCode: TeremkyRaftable.specialCode,
+
+         rate,
+         days: mode === "month" ? days : 0,
+         payments: displayInputs.map((py) => {
+            return {
+               name: py.name,
+               value: py.value,
+               percentage: py.percentage,
+               order: py.order
+            };
+         }),
+         bonuses: [],
+         expenses: [],
+         result: calculateResultRevenue()
+      };
       return revenueObj;
    };
 
@@ -301,6 +301,7 @@ function MobdevicePage() {
                      <span>{description}</span>
                   </div>
                   <ResultBox
+                     specialCode={TeremkyRaftable.specialCode}
                      onClick={() =>
                         dispatch(openBill(calculateRevenueObject()))
                      }
