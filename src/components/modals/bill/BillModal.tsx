@@ -70,46 +70,53 @@ function BillModal({ data }: { data: megaNigger }) {
    return (
       <ModalTemplate title={t("bill.billTitle")}>
          <Row32>
-            <div className="!bg-white !text-black text-[14px] flex flex-col gap-1 p-4 w-[300px] border C-borderBox">
-               <div className="text-center">
-                  <h4>ТОВ ОТК "Raftel"</h4>
-                  <div>м.Київ, вул.Максимовчиа, 28</div>
-                  <div>{t("bill.phone")} 098337281</div>
-                  <div>ПН 39571623222</div>
-               </div>
-               <BillDivider />
-               {/* {JSON.stringify(data)} */}
-               <ul className="billList">
-                  {rateRevenue}
-                  {paymentsList &&
-                     paymentsList.map((el: any, i: any) => (
-                        <li key={i}>
-                           <BillComplexRow
-                              name={el.name}
-                              value={el.value}
-                              percentage={el.percentage}
-                              isSimplifiedForm={isSimplifiedForm}
+            {/* <div className="flex justify-center"> */}
+               <div className="overflow-x-scroll border C-borderBox flex justify-center">
+                  <div className="!bg-white !text-black text-[14px] flex flex-col gap-1 p-4 w-[300px] ">
+                     <div className="text-center">
+                        <h4>ТОВ ОТК "Raftel"</h4>
+                        <div>м.Київ, вул.Максимовчиа, 28</div>
+                        <div>{t("bill.phone")} 098337281</div>
+                        <div>ПН 39571623222</div>
+                     </div>
+                     <BillDivider />
+                     {/* {JSON.stringify(data)} */}
+                     <ul className="billList">
+                        {rateRevenue}
+                        {paymentsList &&
+                           paymentsList.map((el: any, i: any) => (
+                              <li key={i}>
+                                 <BillComplexRow
+                                    name={el.name}
+                                    value={el.value}
+                                    percentage={el.percentage}
+                                    isSimplifiedForm={isSimplifiedForm}
+                                 />
+                              </li>
+                           ))}
+                        <li>
+                           <BillRow
+                              name={t("bill.result")}
+                              value={data.result}
                            />
                         </li>
-                     ))}
-                  <li>
-                     <BillRow name={t("bill.result")} value={data.result} />
-                  </li>
-               </ul>
-               <div>
-                  <BillDivider />
-                  <BillRecevier receiver={receiver} />
+                     </ul>
+                     <div>
+                        <BillDivider />
+                        <BillRecevier receiver={receiver} />
+                     </div>
+                     <p className="flex justify-between">
+                        <span>
+                           {t("bill.date")}: {day}.{month}.{year}
+                        </span>{" "}
+                        <span>
+                           {t("bill.time")}: {time}
+                        </span>
+                     </p>
+                     <p className="text-center">{t("bill.fiscalСheck")}</p>
+                  </div>
                </div>
-               <p className="flex justify-between">
-                  <span>
-                     {t("bill.date")}: {day}.{month}.{year}
-                  </span>{" "}
-                  <span>
-                     {t("bill.time")}: {time}
-                  </span>
-               </p>
-               <p className="text-center">{t("bill.fiscalСheck")}</p>
-            </div>
+            {/* </div> */}
             <Col>
                <LabelRow className="gap-2 self-start">
                   <span>{t("bill.simpleForm")}</span>

@@ -23,6 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { PaymentInput } from "../../components/ui/PaymentInput";
 import { TeremkyRaftable } from "./types";
+import { useSearchParams } from "react-router-dom";
 
 ////// Experimental
 // import strawHat from "../assets/Straw Hat Icon 147411.svg";
@@ -61,7 +62,18 @@ function MobdevicePage() {
                      плата в MobDevice становить приблизно 19 000 грн.`;
 
    // Inner States
-   const [mode, setMode] = useState<"day" | "month">("day");
+   const [searchParams, setSearchParams] = useSearchParams();
+
+   const mode: "month" | "day" = useMemo(() => {
+      const searchMode = searchParams.get("mode") || "";
+      if (searchMode === "month" || searchMode === "day") return searchMode;
+      return "day";
+   }, [searchParams]);
+
+   const setMode = (mode: "month" | "day") => {
+      setSearchParams({ mode });
+   };
+
    const [isSimplifiedMode, setIsSimplifiedMode] = useState(true);
 
    // Days
@@ -309,7 +321,9 @@ function MobdevicePage() {
                <span style={{ fontSize: "0.875em" }}>
                   {TeremkyRaftable.place}
                </span>{" "}
-               <span style={{ fontSize: "0.875em" }}>{t("calculation.tableAuthor")}: ??</span>
+               <span style={{ fontSize: "0.875em" }}>
+                  {t("calculation.tableAuthor")}: ??
+               </span>
             </Row>
          </ContentBox>
       </>

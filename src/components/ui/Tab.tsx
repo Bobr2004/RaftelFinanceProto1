@@ -6,7 +6,7 @@ type TabProps<T> = {
    style?: React.CSSProperties;
 
    activeTab: T;
-   setActiveTab: Dispatch<SetStateAction<T>>;
+   setActiveTab: (tab: T) => void;
    tabTitle: T;
 
    setTriggerAnimnation: Dispatch<SetStateAction<boolean>>;
