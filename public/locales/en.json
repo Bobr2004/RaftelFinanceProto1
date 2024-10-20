@@ -11,8 +11,44 @@
       "currency": "Currency",
       "currencyFormat": "Currency format"
    },
-   "calculation": {},
-   "bill": {},
+   "calculation": {
+      "day": "Day",
+      "month": "Month",
+
+      "rate": "Rate",
+      "simplifiedCalculation": "Simplified calculation",
+      "numberOfDays": "Number of days",
+      "optional": "Optional",
+      "tips": "Tips",
+      "bonus": "Bonus",
+      "tax": "Tax",
+      "addIncome": "Add Income",
+      "addExpense": "Add Expense",
+
+      "result": "Result",
+      "generateBill": "Generate bill",
+      "clearFields": "Clear fields",
+
+      "tableAuthor": "Table author"
+   },
+   "bill": {
+      "billTitle": "Receipt",
+      "revenue": "revenue",
+      "total": "Total",
+      "rate": "Rate",
+      "days": "Number of days",
+      "rateRevenue": "Rate revenue",
+      "result": "Result",
+
+      "optional": "Optional",
+      "recipient": "Recipient",
+      "share": "Share",
+      "save": "Save",
+      "date": "Date",
+      "time": "Time",
+      "phone": "Phone",
+      "fiscalСheck": "Fiscal Receipt"
+   },
    "description": {
       "descriptionTitle": "Description"
    }

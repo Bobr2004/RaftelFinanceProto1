@@ -5,7 +5,11 @@ import { Col } from "../../components/positional/Cols";
 import { handleNumberInput } from "../../functions/inputHandlers";
 import { LabelRow, Row, Row32 } from "../../components/positional/Rows";
 import { ResultBox } from "../../components/ui/ResultBox";
-import { parseCurrency, round2Digits } from "../../functions/helpers";
+import {
+   getRevenue,
+   parseCurrency,
+   round2Digits
+} from "../../functions/helpers";
 import { OpenClose } from "../../components/ui/OpenClose";
 import { Checkbox } from "../../components/ui/Checkbox";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,17 +17,40 @@ import { RootState } from "../../store/store";
 import { Tab } from "../../components/ui/Tab";
 import "./animations.scss";
 import { openBill, openDescription } from "../../store/modalsSlice";
-import { Button } from "../../components/ui/Button";
+import { Button, ButtonIcon } from "../../components/ui/Button";
+import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoins } from "@fortawesome/free-solid-svg-icons";
+import { PaymentInput } from "../../components/ui/PaymentInput";
+import { TeremkyRaftable } from "./types";
 
 ////// Experimental
 // import strawHat from "../assets/Straw Hat Icon 147411.svg";
 // import { StrawHatIcon } from "../customIcons/StrawHatIcon.tsx";
+
+// type optionalFieldType = {
+//    id: string,
+//    name: string,
+
+// }
+
+type paymentInputType = {
+   id: number;
+   order: number;
+   name: string;
+   percentage: number;
+   base?: boolean;
+   secondary?: boolean;
+   value: "" | number;
+};
 
 function MobdevicePage() {
    // Redux state
    const currency = useSelector((store: RootState) => store.settings.currency);
    const [_, currencyName] = useMemo(() => parseCurrency(currency), [currency]);
    const dispatch = useDispatch();
+
+   const { t } = useTranslation();
 
    // API data
    const description = `Заробітна плата в магазині мобільних аксесуарів MobDevice
@@ -35,23 +62,50 @@ function MobdevicePage() {
 
    // Inner States
    const [mode, setMode] = useState<"day" | "month">("day");
-   const [isAdvancedMode, setIsAdvancedMode] = useState(false);
+   const [isSimplifiedMode, setIsSimplifiedMode] = useState(true);
 
    // Days
    const [days, setDays] = useState<number | "">("");
-   // Base
-   const [totalSimple, setTotalSimple] = useState<number | "">("");
-   // Secondary
-   const [services, setServices] = useState<number | "">("");
 
-   const totalSimpleRevenue = (Number(totalSimple) - Number(services)) * 0.06;
-   const servicesRevenue = Number(services) * 0.5;
+   const rate = TeremkyRaftable.rate;
 
-   // Advanced
-   const [products, setProducts] = useState<number | "">("");
-   const productsRevenue = Number(products) * 0.06;
-   const [powerBanks, setPowerBanks] = useState<number | "">("");
-   const powerBanksRevenue = Number(powerBanks) * 0.05;
+   // Payments
+   const [paymentInputs, setPaymentInputs] = useState<paymentInputType[]>(
+      () => {
+         return TeremkyRaftable.payments.map((py) => {
+            return { value: "", ...py };
+         });
+      }
+   );
+
+   const baseRevenue = useMemo(() => {
+      const baseIn = paymentInputs.find((el) => el.base);
+      if (!baseIn) return 0;
+      return (
+         Math.round(
+            paymentInputs.reduce((acc, ell) => {
+               if (ell.secondary) return acc - Number(ell.value);
+               return acc;
+            }, Number(baseIn.value)) * baseIn.percentage
+         ) / 100
+      );
+   }, [paymentInputs]);
+
+   const displayInputs = useMemo(() => {
+      if (!isSimplifiedMode) return paymentInputs.filter((py) => !py.base);
+      return paymentInputs.filter((py) => py.base || py.secondary);
+   }, [paymentInputs, isSimplifiedMode]);
+
+   const changeValue = (id: number) => (value: string) => {
+      let valueToSet: "" | number = "";
+      if (value) valueToSet = Number(value);
+      setPaymentInputs((pys) =>
+         pys.map((py) => (py.id === id ? { ...py, value: valueToSet } : py))
+      );
+   };
+
+   // Optional
+   const [optional, setOptional] = useState<number | "">("");
 
    // Animations
    const [isBlurred, setIsBlurred] = useState(false);
@@ -70,49 +124,17 @@ function MobdevicePage() {
 
    useEffect(() => {
       clearFields();
+      setIsSimplifiedMode(mode === "day");
    }, [mode]);
 
-   const calculateRevenueObject = () => {
-      const resultObject: any = {};
-      resultObject["Ставка:"] = 350;
-      if (mode === "month") {
-         resultObject["Відпрацьовано днів:"] = Number(days);
-         resultObject["Плата за ставку:"] = Number(days) * 350;
-      }
-      if (!isAdvancedMode) {
-         resultObject["Відсоток за товари:"] = productsRevenue;
-         resultObject["Відсоток за годинники:"] = powerBanksRevenue;
-      } else {
-         resultObject["Відсоток з каси:"] = totalSimpleRevenue;
-      }
-      resultObject["Плата за послуги:"] = servicesRevenue;
-      resultObject["Сума:"] = resultRevenue;
-
-      return resultObject;
-   };
-
    const calculateResultRevenue = () => {
-      const resultObject: any = { rate: 350 };
-      let rateRevenue = 350;
-      if (mode === "month") {
-         rateRevenue *= Number(days);
-         resultObject["days"] = Number(days);
-         resultObject["rateRevenue"] = rateRevenue;
-      }
-
-      let totalRevenue = 0;
-      if (!isAdvancedMode) {
-         totalRevenue = productsRevenue + powerBanksRevenue + servicesRevenue;
-      } else {
-         totalRevenue = totalSimpleRevenue + servicesRevenue;
-         resultObject["totalSimpleRevenue"] = totalSimpleRevenue;
-      }
-
-      resultObject["servicesRevenue"] = servicesRevenue;
-
-      return rateRevenue + totalRevenue;
+      let rateRevenue = rate;
+      if (mode === "month" && days) rateRevenue *= days;
+      return (
+         rateRevenue +
+         displayInputs.reduce((acc, el) => acc + getRevenue(el), 0)
+      );
    };
-   const resultRevenue = calculateResultRevenue();
 
    const displayRevenue = (revenue: number) => {
       if (!round2Digits(revenue)) return "";
@@ -121,13 +143,33 @@ function MobdevicePage() {
 
    const clearFields = () => {
       setDays("");
-      setTotalSimple("");
-      setServices("");
-      setProducts("");
-      setPowerBanks("");
+      setPaymentInputs((pys) =>
+         pys.map((el) => {
+            return { ...el, value: "" };
+         })
+      );
    };
 
-   // Test TO DELETE
+   const calculateRevenueObject = () => {
+      const revenueObj = [
+         {
+            rate,
+            days: mode === "month" ? days : 0,
+            payments: displayInputs.map((py) => {
+               return {
+                  name: py.name,
+                  value: py.value,
+                  percentage: py.percentage,
+                  order: py.order
+               };
+            }),
+            bonuses: [],
+            expenses: [],
+            result: calculateResultRevenue()
+         }
+      ];
+      return revenueObj;
+   };
 
    return (
       <>
@@ -141,7 +183,7 @@ function MobdevicePage() {
                {...{ setTriggerAnimnation }}
                tabTitle="day"
             >
-               Day
+               {t("calculation.day")}
             </Tab>
             <Tab
                activeTab={mode}
@@ -149,11 +191,11 @@ function MobdevicePage() {
                {...{ setTriggerAnimnation }}
                tabTitle="month"
             >
-               Month
+               {t("calculation.month")}
             </Tab>
          </Row>
          <ContentBox
-            className={`flex flex-col gap-4 md:max-w-[650px] mx-auto transition05 ${
+            className={`flex flex-col gap-4 md:max-w-[650px] mx-auto transition05 mb-8 md:mb-12 ${
                isBlurred ? "blurred" : ""
             }`}
          >
@@ -161,71 +203,72 @@ function MobdevicePage() {
                <Col>
                   {mode === "month" && (
                      <Col>
-                        <span className=""> Ставка 350 {currencyName}*</span>
+                        <span className="ml-1 C-textSoft">
+                           {t("calculation.rate")} {rate} {currencyName}*
+                        </span>
                         <InputField
-                           name="Кількість днів"
+                           name={t("calculation.numberOfDays")}
                            value={days}
                            onChange={handleNumberInput(setDays)}
-                           display={displayRevenue(Number(days) * 350)}
+                           display={displayRevenue(Number(days) * rate)}
                         />
                      </Col>
                   )}
                   <LabelRow className="gap-2 self-start">
-                     <span>Швидкий підрахунок</span>
+                     <span>{t("calculation.simplifiedCalculation")}</span>
                      <Checkbox
-                        isChecked={isAdvancedMode}
+                        isChecked={isSimplifiedMode}
                         onChange={() => {
-                           setIsAdvancedMode((isC) => !isC);
+                           setIsSimplifiedMode((isC) => !isC);
                         }}
                      />
                   </LabelRow>
-                  {!isAdvancedMode ? (
-                     <>
-                        <InputField
-                           name="Товари"
-                           value={products}
-                           onChange={handleNumberInput(setProducts)}
-                           display={displayRevenue(productsRevenue)}
-                        />
-                        <InputField
-                           name="Смарт годиннки"
-                           value={powerBanks}
-                           onChange={handleNumberInput(setPowerBanks)}
-                           display={displayRevenue(powerBanksRevenue)}
-                        />
-                     </>
-                  ) : (
-                     <InputField
-                        name="Каса"
-                        value={totalSimple}
-                        onChange={handleNumberInput(setTotalSimple)}
-                        display={displayRevenue(totalSimpleRevenue)}
-                        info="Вся каса, враховуючи послуги та різні типи товірів"
-                     />
-                  )}
-
-                  <InputField
-                     name="Послуги"
-                     value={services}
-                     onChange={handleNumberInput(setServices)}
-                     display={displayRevenue(servicesRevenue)}
-                  />
-
+                  <ul className="flex flex-col gap-4">
+                     {displayInputs.map((py) => (
+                        <li key={py.order}>
+                           <PaymentInput
+                              name={py.name}
+                              value={py.value}
+                              onChange={changeValue(py.id)}
+                              display={py.base ? baseRevenue : getRevenue(py)}
+                           />
+                        </li>
+                     ))}
+                  </ul>
                   <OpenClose
-                     title="Додатково "
+                     title={t("calculation.optional")}
                      className="gap-2 self-start w-full"
                   >
                      <Col>
-                        <div>Tips</div>
-                        <div>Bonuses</div>
-                        <div>Taxes</div>
+                        <InputField
+                           name={t("calculation.bonus")}
+                           value={optional}
+                           onChange={handleNumberInput(setOptional)}
+                           display={displayRevenue(Number(optional))}
+                        />
+                        <InputField
+                           name={t("calculation.tax")}
+                           value={optional}
+                           onChange={handleNumberInput(setOptional)}
+                           display={displayRevenue(Number(optional))}
+                        />
+                        <Row className="!grid !grid-cols-2 text-[0.8em]">
+                           <ButtonIcon>
+                              {t("calculation.addIncome")}{" "}
+                              <FontAwesomeIcon
+                                 className="text-green-500"
+                                 icon={faCoins}
+                              />
+                           </ButtonIcon>
+                           <ButtonIcon>
+                              {t("calculation.addExpense")}{" "}
+                              <FontAwesomeIcon
+                                 className="text-red-500"
+                                 icon={faCoins}
+                              />
+                           </ButtonIcon>
+                        </Row>
                      </Col>
-                     {/* <InputField
-                        name="Чайові"
-                        value={total}
-                        onChange={handleNumberInput(setTotal)}
-                        info="На чайові не накладається ніякий відсоток"
-                     /> */}
                   </OpenClose>
                </Col>
                <Col>
@@ -248,7 +291,7 @@ function MobdevicePage() {
                         dispatch(openBill(calculateRevenueObject()))
                      }
                   >
-                     {round2Digits(resultRevenue)}
+                     {calculateResultRevenue()}
                   </ResultBox>
                   <div className="text-center">
                      <Button

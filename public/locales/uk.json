@@ -10,5 +10,39 @@
       "selectedCurrency": "Обрана валюта",
       "currency": "Валюта",
       "currencyFormat": "Формат валюти"
+   },
+   "calculation": {
+      "day": "День",
+      "month": "Місяць",
+
+      "rate": "Ставка",
+      "simplifiedCalculation": "Спрощений розрахунок",
+      "numberOfDays": "Кількість днів",
+      "optional": "Додатково",
+      "tips": "Чайові",
+      "bonus": "Премія",
+      "tax": "Податок",
+      "addIncome": "Додати дохід",
+      "addExpense": "Додати витрату",
+
+      "result": "Результат",
+      "generateBill": "Друкувати чек",
+      "clearFields": "Очистити поля",
+
+      "tableAuthor": "Автор таблиці"
+   },
+   "bill": {
+      "billTitle": "Розрахунковий чек",
+      "optional": "Необовʼязково",
+      "recipient": "Отримувач",
+      "share": "Поділитися",
+      "save": "Зберегти",
+      "date": "Дата",
+      "time": "Час",
+      "phone": "тел.",
+      "fiscalСheck": "Фіскальний чек"
+   },
+   "description": {
+      "descriptionTitle": "Description"
    }
 }

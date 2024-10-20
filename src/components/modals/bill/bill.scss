@@ -1,6 +1,10 @@
 .billList {
-   & li:last-child {
-      font-size: 1.2em;
-      font-weight: 700;
+   & li:last-child > div > span {
+      font-size: 1.2em !important;
+      font-weight: 700 !important;
+   }
+
+   li {
+      margin-top: -0.25rem;
    }
 }

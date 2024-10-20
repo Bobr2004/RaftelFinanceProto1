@@ -5,7 +5,6 @@ body,
    height: 100%;
 }
 
-
 // Custom selectors
 .grid32,
 .grid23 {
@@ -27,4 +26,17 @@ body,
    top: 50%;
    left: 50%;
    transform: translate(-50%, -50%);
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

@@ -12,7 +12,9 @@ function DescriptionModal() {
 
    return (
       <ModalTemplate title={t("description.descriptionTitle")}>
-         <span>{description}</span>
+         <div className="flex justify-center mb-4">
+            <p className="max-w-[40ch]">{description}</p>
+         </div>
       </ModalTemplate>
    );
 }
