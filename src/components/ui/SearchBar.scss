@@ -1,0 +1,8 @@
+@import "../../styles/mixins";
+
+.SearchBar {
+   transition: all 0.15s ease;
+   &:has(input:focus) {
+      @include LightAndDarkImportant(#{border-customLight-600}, border-customDark-600);
+   }
+}
