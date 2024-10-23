@@ -18,6 +18,8 @@ type raftableType = {
    rate: number;
    percentage: string;
 
+   description: string;
+
    payments: paymentType[];
 
    specialCode?: string;
@@ -30,6 +32,13 @@ const teremkyRaftable = {
    place: "Київ, Лятошинського 14, Теремки 2",
    rate: 350,
    percentage: "6%, 50%",
+
+   description: `Заробітна плата в магазині мобільних аксесуарів MobDevice
+                     складається з фіксованої ставки та процентів від продажів.
+                     Базова ставка становить 350 грн за день. Крім того,
+                     працівник отримує 6% від вартості проданих товарів та 50%
+                     від вартості наданих послуг. Середня місячна заробітна
+                     плата в MobDevice становить приблизно 19 000 грн.`,
 
    specialCode: "Strawhat",
 
@@ -62,6 +71,15 @@ const artMallRaftable = {
    rate: 350,
    percentage: "6%, 50%",
 
+   description: `Заробітна плата в магазині мобільних аксесуарів MobDevice
+                     складається з фіксованої ставки та процентів від продажів.
+                     Базова ставка становить 350 грн за день. Крім того,
+                     працівник отримує 6% від вартості проданих товарів та 50%
+                     від вартості наданих послуг. Середня місячна заробітна
+                     плата в MobDevice становить приблизно 19 000 грн.`,
+
+   specialCode: "Akagami",
+
    payments: [
       {
          id: 1231,
@@ -91,7 +109,7 @@ const KeysRaftable = {
    rate: 450,
    percentage: "10%, 100%",
 
-   specialCode: "Akagami",
+   description: `Заробітна плата в магазині OS .9 складається з фіксованої ставки та процентів від виконаних робіт і продажу товарів. Базова ставка становить 450 грн за день. Крім того, працівник отримує 10% від вартості проданих товарів та 100% від вартості виконаних ремонтних робіт, таких як заміна елементів живлення або виготовлення ключів. Середня місячна заробітна плата в OS .9 становить приблизно 22 000 грн.`,
 
    payments: [
       {
@@ -114,10 +132,11 @@ const KeysRaftable = {
 };
 
 const raftables: raftableType[] = [
-   teremkyRaftable, artMallRaftable, KeysRaftable
+   teremkyRaftable,
+   artMallRaftable,
+   KeysRaftable
 ];
 
+export { raftables };
 
-export {raftables};
-
-export type {paymentType, raftableType};
+export type { paymentType, raftableType };

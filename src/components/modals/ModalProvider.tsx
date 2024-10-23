@@ -28,7 +28,7 @@ function ModalProvider() {
          return (
             <>
                <Overlay />
-               <DescriptionModal />
+               <DescriptionModal {...{data}}/>
             </>
          );
    }

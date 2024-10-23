@@ -25,9 +25,10 @@ const modalsSlice = createSlice({
          state.type = "bill";
          state.data = action.payload;
       },
-      openDescription(state) {
+      openDescription(state, action: PayloadAction<string>) {
          state.isOpen = true;
          state.type = "description";
+         state.data = action.payload;
       },
       closeModals(state) {
          state.isOpen = false;

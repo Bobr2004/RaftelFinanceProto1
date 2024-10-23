@@ -22,7 +22,6 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { PaymentInput } from "../../components/ui/PaymentInput";
-import { TeremkyRaftable } from "./types";
 import { NavLink, useParams, useSearchParams } from "react-router-dom";
 
 import { raftables } from "./dummyData";
@@ -38,21 +37,13 @@ type paymentInputType = {
    info?: string;
 };
 
-function MobdevicePage() {
+function RaftablePage() {
    // Redux state
    const currency = useSelector((store: RootState) => store.settings.currency);
    const [_, currencyName] = useMemo(() => parseCurrency(currency), [currency]);
    const dispatch = useDispatch();
 
    const { t } = useTranslation();
-
-   // API data
-   const description = `Заробітна плата в магазині мобільних аксесуарів MobDevice
-                     складається з фіксованої ставки та процентів від продажів.
-                     Базова ставка становить 350 грн за день. Крім того,
-                     працівник отримує 6% від вартості проданих товарів та 50%
-                     від вартості наданих послуг. Середня місячна заробітна
-                     плата в MobDevice становить приблизно 19 000 грн.`;
 
    // Inner States
    const [searchParams, setSearchParams] = useSearchParams();
@@ -63,6 +54,7 @@ function MobdevicePage() {
       () => raftables.find((raf) => raf.id === Number(id)),
       []
    );
+
    if (!raftableData)
       return (
          <>
@@ -184,7 +176,7 @@ function MobdevicePage() {
 
    const calculateRevenueObject = () => {
       const revenueObj = {
-         specialCode: TeremkyRaftable.specialCode,
+         specialCode: raftableData.specialCode,
 
          rate,
          days: mode === "month" ? days : 0,
@@ -307,7 +299,7 @@ function MobdevicePage() {
                <Col>
                   <div
                      onClick={() => {
-                        dispatch(openDescription());
+                        dispatch(openDescription(raftableData.description));
                      }}
                      className="relative border C-borderBox h-16 overflow-hidden p-2 cursor-pointer descriptionBox"
                   >
@@ -317,10 +309,10 @@ function MobdevicePage() {
                      >
                         ...
                      </span>
-                     <span>{description}</span>
+                     <span>{raftableData.description}</span>
                   </div>
                   <ResultBox
-                     specialCode={TeremkyRaftable.specialCode}
+                     specialCode={raftableData.specialCode}
                      onClick={() =>
                         dispatch(openBill(calculateRevenueObject()))
                      }
@@ -340,9 +332,7 @@ function MobdevicePage() {
                </Col>
             </Row32>
             <Row className="justify-between C-textSofter">
-               <span style={{ fontSize: "0.875em" }}>
-                  {raftableData.place}
-               </span>{" "}
+               <span style={{ fontSize: "0.875em" }}>{raftableData.place}</span>{" "}
                <span style={{ fontSize: "0.875em" }}>
                   {t("calculation.tableAuthor")}: ??
                </span>
@@ -352,4 +342,4 @@ function MobdevicePage() {
    );
 }
 
-export { MobdevicePage };
+export { RaftablePage };

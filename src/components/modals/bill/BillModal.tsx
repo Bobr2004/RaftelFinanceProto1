@@ -42,6 +42,7 @@ type megaNigger = {
 
 function BillModal({ data }: { data: megaNigger }) {
    const { t } = useTranslation();
+   
 
    const paymentsList = useMemo(() => [...data.payments].sort(), []);
 
