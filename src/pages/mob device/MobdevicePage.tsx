@@ -23,17 +23,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { PaymentInput } from "../../components/ui/PaymentInput";
 import { TeremkyRaftable } from "./types";
-import { useSearchParams } from "react-router-dom";
+import { NavLink, useParams, useSearchParams } from "react-router-dom";
 
-////// Experimental
-// import strawHat from "../assets/Straw Hat Icon 147411.svg";
-// import { StrawHatIcon } from "../customIcons/StrawHatIcon.tsx";
-
-// type optionalFieldType = {
-//    id: string,
-//    name: string,
-
-// }
+import { raftables } from "./dummyData";
 
 type paymentInputType = {
    id: number;
@@ -65,11 +57,34 @@ function MobdevicePage() {
    // Inner States
    const [searchParams, setSearchParams] = useSearchParams();
 
+   const { id } = useParams();
+
+   const raftableData = useMemo(
+      () => raftables.find((raf) => raf.id === Number(id)),
+      []
+   );
+   if (!raftableData)
+      return (
+         <>
+            <h1 className="font-bold text-center mb-8 mt-8 md:mt-24 flex flex-col gap-4">
+               <span>404</span> <span>Raftable not found</span>
+            </h1>
+            <p className="text-center">
+               <NavLink to={"/"} className=" underline ">
+                  Home page
+               </NavLink>
+            </p>
+         </>
+      );
+
    const mode: "month" | "day" = useMemo(() => {
       const searchMode = searchParams.get("mode") || "";
       if (searchMode === "month" || searchMode === "day") return searchMode;
       return "day";
    }, [searchParams]);
+
+   // for blur animation
+   const [initialLoad, setInitialLoad] = useState(true);
 
    const setMode = (mode: "month" | "day") => {
       setSearchParams({ mode });
@@ -80,12 +95,12 @@ function MobdevicePage() {
    // Days
    const [days, setDays] = useState<number | "">("");
 
-   const rate = TeremkyRaftable.rate;
+   const rate = raftableData.rate;
 
    // Payments
    const [paymentInputs, setPaymentInputs] = useState<paymentInputType[]>(
       () => {
-         return TeremkyRaftable.payments.map((py) => {
+         return raftableData.payments.map((py) => {
             return { value: "", ...py };
          });
       }
@@ -132,7 +147,11 @@ function MobdevicePage() {
    };
 
    useEffect(() => {
-      triggerBlur();
+      if (initialLoad) {
+         setInitialLoad(false);
+      } else {
+         triggerBlur();
+      }
    }, [triggerAnimation]);
 
    useEffect(() => {
@@ -187,7 +206,7 @@ function MobdevicePage() {
    return (
       <>
          <h1 className="font-bold text-center mb-8 mt-8 md:mt-24">
-            Mobdevice Revenue
+            {raftableData.title}
          </h1>
          <Row className="justify-center md:max-w-[650px] mx-auto mb-2">
             <Tab
@@ -322,7 +341,7 @@ function MobdevicePage() {
             </Row32>
             <Row className="justify-between C-textSofter">
                <span style={{ fontSize: "0.875em" }}>
-                  {TeremkyRaftable.place}
+                  {raftableData.place}
                </span>{" "}
                <span style={{ fontSize: "0.875em" }}>
                   {t("calculation.tableAuthor")}: ??

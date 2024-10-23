@@ -10,12 +10,12 @@ type paymentType = {
    secondary?: boolean;
 };
 
-
 type RaftableType = {
    id: string;
    place: string;
 
    rate: number;
+   averagePercentage: string;
 
    payments: paymentType[];
 
@@ -59,10 +59,11 @@ const TeremkyRaftable: RaftableType = {
    id: "da937b90-c9ce-4573-a006-c2c05252e369",
    place: "Київ, Лятошинського, 14",
    rate: 350,
+   averagePercentage: "5 - 60%",
 
-   payments: TeremkyPayments,
+   payments: TeremkyPayments
 
-   specialCode: "Strawhat"
+   // specialCode: "Akagami"
 };
 
 export { TeremkyRaftable };

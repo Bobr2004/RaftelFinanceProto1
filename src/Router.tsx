@@ -9,8 +9,8 @@ function Router() {
       <BrowserRouter>
          <Routes>
             <Route path="/" element={<Layout />}>
-               <Route path="/" index element={<SearchPage/>} />
-               <Route path="/mobdevice" element={<MobdevicePage />} />
+               <Route path="" index element={<SearchPage/>} />
+               <Route path="raftable/:id" element={<MobdevicePage />} />
                <Route path="*" element={<NotFound />} />
             </Route>
          </Routes>
