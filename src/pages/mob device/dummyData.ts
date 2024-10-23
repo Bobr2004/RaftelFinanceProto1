@@ -126,7 +126,9 @@ const KeysRaftable = {
          order: 4,
          name: "Аварійка",
          percentage: 100,
-         secondary: true
+         secondary: true,
+         info: "Всі послуги та гегере гегере*"
+
       }
    ]
 };

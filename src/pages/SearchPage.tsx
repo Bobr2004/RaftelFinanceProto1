@@ -14,8 +14,8 @@ function SearchPage() {
 
    const satisfiesQueryRaftable = useCallback(
       (raf: raftableType) => {
-         if (raf.title.includes(query)) return true;
-         if (raf.place.includes(query)) return true;
+         if (raf.title.toLocaleLowerCase().includes(query.toLocaleLowerCase())) return true;
+         if (raf.place.toLocaleLowerCase().includes(query.toLocaleLowerCase())) return true;
          return false;
       },
       [query]
@@ -25,7 +25,7 @@ function SearchPage() {
    return (
       <>
          <h1 className="text-center my-10 font-bold">Raftable search</h1>
-         <div className="my-8 max-w-[400px] mx-auto">
+         <div className="my-8 max-w-[400px] mx-auto w-[315px] md:w-full">
             <SearchBar />
          </div>
          <div>
