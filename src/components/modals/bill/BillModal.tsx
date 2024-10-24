@@ -182,35 +182,18 @@ function BillModal({ data }: { data: megaNigger }) {
                            />
                         </li>
                      ))}
-                     {isSimplifiedForm ? (
-                        <>
-                           {bonusesRevenue && (
-                              <BillRow
-                                 name={"Додаткові доходи"}
-                                 value={bonusesRevenue}
-                              />
-                           )}
-                           {expensesRevenue && (
-                              <BillRow
-                                 name={"Додаткові витрати"}
-                                 value={expensesRevenue}
-                              />
-                           )}
-                        </>
-                     ) : (
-                        <>
-                           {data?.bonuses.map((el: any, i: any) => (
-                              <li key={i}>
-                                 <BillRow name={el.name} value={el.value} />
-                              </li>
-                           ))}
-                           {data?.expenses.map((el: any, i: any) => (
-                              <li key={i}>
-                                 <BillRow name={el.name} value={el.value} />
-                              </li>
-                           ))}
-                        </>
-                     )}
+                     <BillBERow
+                        type="bonuses"
+                        BEList={data.bonuses}
+                        {...{ isSimplifiedForm }}
+                        result={bonusesRevenue}
+                     />
+                     <BillBERow
+                        type="expenses"
+                        BEList={data.expenses}
+                        {...{ isSimplifiedForm }}
+                        result={expensesRevenue}
+                     />
                      <li>
                         <BillRow name={t("bill.result")} value={data.result} />
                      </li>
@@ -266,6 +249,43 @@ function BillModal({ data }: { data: megaNigger }) {
             </Col>
          </Row32>
       </ModalTemplate>
+   );
+}
+
+type BillBERowProps = {
+   type: "expenses" | "bonuses";
+   BEList: BEType[];
+   isSimplifiedForm: boolean;
+   result: number | string;
+};
+
+function BillBERow({ type, BEList, isSimplifiedForm, result }: BillBERowProps) {
+   const typeValue = (val: string | number) => {
+      return `${type === "expenses" ? "- " : ""}${val}`;
+   };
+
+   if (!result) return;
+   const BEName = type === "bonuses" ? "Додаткові доходи" : "Додаткові витрати";
+   if (isSimplifiedForm)
+      return <BillRow name={BEName} value={typeValue(result)} />;
+   return (
+      <div className="flex flex-col gap-1">
+         <BillRow name={BEName} value={typeValue(result)} />
+         {BEList?.map((el: any, i: any) => {
+            return (
+               <>
+                  {el.value && (
+                     <div key={i}>
+                        <BillSubRow
+                           name={el.name}
+                           value={typeValue(el.value)}
+                        />
+                     </div>
+                  )}
+               </>
+            );
+         })}
+      </div>
    );
 }
 
