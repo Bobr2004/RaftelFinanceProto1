@@ -30,21 +30,30 @@ type paymentType = {
    order: number;
 };
 
+type BEType = {
+   name: string;
+   value: number | "";
+};
+
 type megaNigger = {
    specialCode?: string;
    rate: number;
    days: number;
    payments: paymentType[];
-   bonuses: paymentType[];
-   expenses: paymentType[];
+   bonuses: BEType[];
+   expenses: BEType[];
    result: number;
 };
 
 function BillModal({ data }: { data: megaNigger }) {
    const { t } = useTranslation();
-   
 
    const paymentsList = useMemo(() => [...data.payments].sort(), []);
+
+   const bonusesRevenue =
+      data.bonuses.reduce((acc, el) => acc + Number(el.value), 0) || "";
+   const expensesRevenue =
+      data.expenses.reduce((acc, el) => acc + Number(el.value), 0) || "";
 
    const [receiver, setReceiver] = useState("");
 
@@ -130,11 +139,11 @@ function BillModal({ data }: { data: megaNigger }) {
       switch (data.specialCode) {
          case "Strawhat":
             return {
-               background: `url(${StrawHat}) 0% 100% / 50% no-repeat`,
+               background: `url(${StrawHat}) 0% 100% / 50% no-repeat`
             };
          case "Akagami":
             return {
-               background: `url(${Akagami}) 0% 100% / 50% no-repeat`,
+               background: `url(${Akagami}) 0% 100% / 50% no-repeat`
             };
       }
       return {};
@@ -149,7 +158,10 @@ function BillModal({ data }: { data: megaNigger }) {
                   className="!bg-white !text-black text-[14px] flex flex-col gap-1 p-4 w-[300px] relative z-40"
                   ref={receiptRef}
                >
-                  <div className="absolute opacity-20 inset-0 z-10" style={customBackground}></div>
+                  <div
+                     className="absolute opacity-20 inset-0 z-10"
+                     style={customBackground}
+                  ></div>
                   <div className="text-center">
                      <h4>ТОВ ОТК "Raftel"</h4>
                      <div>м.Київ, вул.Максимовчиа, 28</div>
@@ -160,17 +172,45 @@ function BillModal({ data }: { data: megaNigger }) {
                   {/* {JSON.stringify(data)} */}
                   <ul className="billList">
                      {rateRevenue}
-                     {paymentsList &&
-                        paymentsList.map((el: any, i: any) => (
-                           <li key={i}>
-                              <BillComplexRow
-                                 name={el.name}
-                                 value={el.value}
-                                 percentage={el.percentage}
-                                 isSimplifiedForm={isSimplifiedForm}
+                     {paymentsList.map((el: any, i: any) => (
+                        <li key={i}>
+                           <BillComplexRow
+                              name={el.name}
+                              value={el.value}
+                              percentage={el.percentage}
+                              isSimplifiedForm={isSimplifiedForm}
+                           />
+                        </li>
+                     ))}
+                     {isSimplifiedForm ? (
+                        <>
+                           {bonusesRevenue && (
+                              <BillRow
+                                 name={"Додаткові доходи"}
+                                 value={bonusesRevenue}
                               />
-                           </li>
-                        ))}
+                           )}
+                           {expensesRevenue && (
+                              <BillRow
+                                 name={"Додаткові витрати"}
+                                 value={expensesRevenue}
+                              />
+                           )}
+                        </>
+                     ) : (
+                        <>
+                           {data?.bonuses.map((el: any, i: any) => (
+                              <li key={i}>
+                                 <BillRow name={el.name} value={el.value} />
+                              </li>
+                           ))}
+                           {data?.expenses.map((el: any, i: any) => (
+                              <li key={i}>
+                                 <BillRow name={el.name} value={el.value} />
+                              </li>
+                           ))}
+                        </>
+                     )}
                      <li>
                         <BillRow name={t("bill.result")} value={data.result} />
                      </li>

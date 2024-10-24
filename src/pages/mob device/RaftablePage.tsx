@@ -263,10 +263,22 @@ function RaftablePage() {
    const calculateResultRevenue = () => {
       let rateRevenue = rate;
       if (mode === "month" && days) rateRevenue *= days;
-      return (
-         rateRevenue +
-         displayInputs.reduce((acc, el) => acc + getRevenue(el), 0)
-      );
+
+      const mainRevenue =
+         displayInputs.reduce((acc, el) => acc + getRevenue(el), 0) || 0;
+
+      const bonusesRevenue =
+         customCurrentPaymentList.reduce(
+            (acc, el) => acc + Number(el.value),
+            0
+         ) || 0;
+      const expensesRevenue =
+         customCurrentExpensesList.reduce(
+            (acc, el) => acc + Number(el.value),
+            0
+         ) || 0;
+
+      return rateRevenue + mainRevenue + bonusesRevenue - expensesRevenue;
    };
 
    const displayRevenue = (revenue: number) => {
@@ -301,16 +313,23 @@ function RaftablePage() {
 
          rate,
          days: mode === "month" ? days : 0,
-         payments: displayInputs.map((py) => {
-            return {
-               name: py.name,
-               value: py.value,
-               percentage: py.percentage,
-               order: py.order
-            };
-         }),
-         bonuses: [],
-         expenses: [],
+         payments:
+            displayInputs?.map((py) => {
+               return {
+                  name: py.name,
+                  value: py.value,
+                  percentage: py.percentage,
+                  order: py.order
+               };
+            }) || [],
+         bonuses:
+            customCurrentPaymentList?.map((py) => {
+               return { name: py.name, value: py.value };
+            }) || [],
+         expenses:
+            customCurrentExpensesList?.map((py) => {
+               return { name: py.name, value: py.value };
+            }) || [],
          result: calculateResultRevenue()
       };
       return revenueObj;
