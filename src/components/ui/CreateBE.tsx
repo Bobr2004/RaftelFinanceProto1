@@ -68,9 +68,9 @@ function CreateBE({ type, leaveAddMode, raftableId }: CreateBEProps) {
    };
 
    const titleBE = () => {
-      if (type === "Bonus") return "Назва доходу";
-      if (type === "Expense") return "Назва витрати";
-      return "Назва поля";
+      if (type === "Bonus") return t("calculation.incomeName");
+      if (type === "Expense") return t("calculation.expenseName");
+      return "Field name";
    };
 
    return (

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { parseCurrency } from "../../functions/helpers";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 function Raftable({
    id,
@@ -17,6 +18,8 @@ function Raftable({
    const currency = useSelector((store: RootState) => store.settings.currency);
    const [_, currencyName] = useMemo(() => parseCurrency(currency), [currency]);
 
+   const {t} = useTranslation();
+
 
    return (
       <Link
@@ -26,7 +29,7 @@ function Raftable({
          <h3 className="mb-2">{title}</h3>
          <p>{jobTitle}</p>
          <ul className="flex justify-between ">
-            <li title="Ставка">Стака: {rate} {currencyName}</li>
+            <li title="Ставка">{t("search.rate")}: {rate} {currencyName}</li>
             <li title="Процент від продажу">{percentage}</li>
          </ul>
          <Row className="justify-between C-textSofter">

@@ -510,7 +510,7 @@ function RaftablePage() {
                            clearFields();
                         }}
                      >
-                        Clear
+                        {t("calculation.clearFields")}
                      </Button>
                   </div>
                </Col>

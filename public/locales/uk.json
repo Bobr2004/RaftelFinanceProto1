@@ -25,9 +25,15 @@
       "addIncome": "Додати дохід",
       "addExpense": "Додати витрату",
 
+      "incomeName": "Назва доходу",
+      "expenseName": "Назва витрати",
+
       "result": "Результат",
       "generateBill": "Друкувати чек",
       "clearFields": "Очистити поля",
+
+
+
 
       "tableAuthor": "Автор таблиці"
    },
@@ -44,6 +50,9 @@
 
       "simpleForm": "Проста форма",
 
+      "otherIncome": "Додаткові доходи",
+      "otherExpenses": "Додаткові витрати",
+
 
       "optional": "Необовʼязково",
       "recipient": "Отримувач",
@@ -59,5 +68,10 @@
    },
    "description": {
       "descriptionTitle": "Опис"
+   },
+   "search": {
+      "raftableSearch": "Пошук розрахункових таблиць",
+      "search": "Пошук",
+      "rate": "Ставка"
    }
 }

@@ -76,8 +76,10 @@ function BillModal({ data }: { data: megaNigger }) {
                name={`${t("bill.rate")} ${t("bill.revenue")}`}
                value={round2Digits(data.rate * data.days)}
             />
+            <div className="flex flex-col gap-0.5 mt-0.5">
             <BillSubRow name={t("bill.rate")} value={data.rate} />
             <BillSubRow name={t("bill.days")} value={data.days} noCurrency />
+            </div>
          </li>
       );
    }, []);
@@ -182,13 +184,14 @@ function BillModal({ data }: { data: megaNigger }) {
                            />
                         </li>
                      ))}
-                     <BillBERow
+
+                     <BillBERows
                         type="bonuses"
                         BEList={data.bonuses}
                         {...{ isSimplifiedForm }}
                         result={bonusesRevenue}
                      />
-                     <BillBERow
+                     <BillBERows
                         type="expenses"
                         BEList={data.expenses}
                         {...{ isSimplifiedForm }}
@@ -259,13 +262,20 @@ type BillBERowProps = {
    result: number | string;
 };
 
-function BillBERow({ type, BEList, isSimplifiedForm, result }: BillBERowProps) {
+function BillBERows({
+   type,
+   BEList,
+   isSimplifiedForm,
+   result
+}: BillBERowProps) {
    const typeValue = (val: string | number) => {
       return `${type === "expenses" ? "- " : ""}${val}`;
    };
+   const { t } = useTranslation();
 
    if (!result) return;
-   const BEName = type === "bonuses" ? "Додаткові доходи" : "Додаткові витрати";
+   const BEName =
+      type === "bonuses" ? t("bill.otherIncome") : t("bill.otherExpenses");
    if (isSimplifiedForm)
       return <BillRow name={BEName} value={typeValue(result)} />;
    return (
@@ -290,7 +300,11 @@ function BillBERow({ type, BEList, isSimplifiedForm, result }: BillBERowProps) {
 }
 
 function BillDivider() {
-   return <p className="text-center">------------------------------------</p>;
+   return (
+      <p className="flex justify-evenly  ">
+         <span>--------------------------------</span>
+      </p>
+   );
 }
 
 function BillRecevier({ receiver }: { receiver: string }) {
@@ -360,7 +374,7 @@ function BillComplexRow({
       );
    else
       return (
-         <div className="flex flex-col gap-1">
+         <div className="flex flex-col gap-0.5">
             <BillRow
                name={name}
                value={round2Digits((value * percentage) / 100)}

@@ -2,8 +2,11 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./SearchBar.scss";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function SearchBar() {
+   const {t} = useTranslation();
+
    const [searchParams, setSearchParams] = useSearchParams();
 
    const query = searchParams.get("query") || "";
@@ -17,7 +20,7 @@ function SearchBar() {
          <input
             type="text"
             value={query}
-            placeholder="Search"
+            placeholder={t("search.search")}
             onChange={(e) => {
                setQuery(e.target.value);
             }}

@@ -25,6 +25,9 @@
       "addIncome": "Add Income",
       "addExpense": "Add Expense",
 
+      "incomeName": "Income name",
+      "expenseName": "Expense name",
+
       "result": "Result",
       "generateBill": "Generate bill",
       "clearFields": "Clear fields",
@@ -44,6 +47,9 @@
 
       "simpleForm": "Simple form",
 
+      "otherIncome": "Other income",
+      "otherExpenses": "Other expenses",
+
 
       "optional": "Optional",
       "recipient": "Recipient",
@@ -59,5 +65,10 @@
    },
    "description": {
       "descriptionTitle": "Description"
+   },
+   "search": {
+      "raftableSearch": "Raftable search",
+      "search": "Search",
+      "rate": "Rate"
    }
 }

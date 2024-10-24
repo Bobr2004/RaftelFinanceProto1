@@ -6,9 +6,12 @@ import "./SearchPage.scss";
 
 import { raftables, raftableType } from "./mob device/dummyData";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function SearchPage() {
    const [searchParams] = useSearchParams();
+
+   const {t} = useTranslation();
 
    const query = searchParams.get("query") || "";
 
@@ -24,7 +27,7 @@ function SearchPage() {
    const displayRaftables = () => raftables.filter(satisfiesQueryRaftable);
    return (
       <>
-         <h1 className="text-center my-10 font-bold">Raftable search</h1>
+         <h1 className="text-center my-10 font-bold">{t("search.raftableSearch")}</h1>
          <div className="my-8 max-w-[400px] mx-auto w-[315px] md:w-full">
             <SearchBar />
          </div>
