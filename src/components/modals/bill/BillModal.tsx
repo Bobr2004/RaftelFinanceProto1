@@ -20,8 +20,10 @@ import { useTranslation } from "react-i18next";
 import { Checkbox } from "../../ui/Checkbox";
 import { toPng } from "html-to-image";
 
-import StrawHat from "/images/Strawhat.png";
-import Akagami from "/images/Akagami.png";
+import StrawHat from "/images/Strawhat.webp";
+import Akagami from "/images/Akagami.webp";
+import Ace from "/images/Ace.webp";
+import Choppa from "/images/Choppa.webp";
 
 type paymentType = {
    name: string;
@@ -141,11 +143,19 @@ function BillModal({ data }: { data: megaNigger }) {
       switch (data.specialCode) {
          case "Strawhat":
             return {
-               background: `url(${StrawHat}) 0% 100% / 50% no-repeat`
+               background: `url(${StrawHat}) 40% 100% / 40% no-repeat`
             };
          case "Akagami":
             return {
-               background: `url(${Akagami}) 0% 100% / 50% no-repeat`
+               background: `url(${Akagami}) 40% 95% / 35% no-repeat`
+            };
+         case "Portgas":
+            return {
+               background: `url(${Ace}) 55% 100% / 50% no-repeat`
+            };
+         case "TonyTony":
+            return {
+               background: `url(${Choppa}) 45% 100% / 100% no-repeat`
             };
       }
       return {};
@@ -161,7 +171,7 @@ function BillModal({ data }: { data: megaNigger }) {
                   ref={receiptRef}
                >
                   <div
-                     className="absolute opacity-20 inset-0 z-10"
+                     className="absolute opacity-15 inset-0 z-10"
                      style={customBackground}
                   ></div>
                   <div className="text-center">

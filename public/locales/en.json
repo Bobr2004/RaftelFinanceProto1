@@ -70,5 +70,9 @@
       "raftableSearch": "Raftable search",
       "search": "Search",
       "rate": "Rate"
+   },
+
+   "footer": {
+      "contactDeveloper": "Developer contact:"
    }
 }

@@ -73,5 +73,8 @@
       "raftableSearch": "Пошук розрахункових таблиць",
       "search": "Пошук",
       "rate": "Ставка"
+   },
+   "footer": {
+      "contactDeveloper": "Звʼязатись з робробником:"
    }
 }

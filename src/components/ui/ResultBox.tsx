@@ -7,6 +7,7 @@ import { StrawHatIcon } from "../../customIcons/StrawHatIcon";
 import { CSSProperties, useMemo, useState } from "react";
 
 import "../../customIcons/customSvg.scss";
+import { Flame } from "../../customIcons/Flame";
 
 type ResultBoxProps = {
    children: React.ReactNode;
@@ -26,12 +27,33 @@ function ResultBox({ children, onClick, specialCode }: ResultBoxProps) {
             setCustomStyles((cs) => {
                return { ...cs, marginTop: "0.5rem" };
             });
-            return <StrawHatIcon className="absolute -top-5 -right-6 h-12 rotate-[18deg] " />;
+            return (
+               <StrawHatIcon className="absolute -top-5 -right-6 h-12 rotate-[18deg]" />
+            );
          case "Akagami":
             setCustomStyles((cs) => {
-               return { ...cs, border: "0.5px solid #b91c1c", boxShadow: "2px 2px 10px #dc2626" };
+               return {
+                  ...cs,
+                  border: "0.5px solid #b91c1c",
+                  boxShadow: "2px 2px 3px #dc2626"
+               };
             });
             return;
+         case "TonyTony":
+            setCustomStyles((cs) => {
+               return {
+                  ...cs,
+                  boxShadow: "4px 4px #ea2d7c, -2px -2px #c19bad"
+               };
+            });
+            return;
+         case "Portgas":
+            setCustomStyles((cs) => {
+               return { ...cs, marginTop: "0.5rem" };
+            });
+            return (
+               <Flame className="absolute bottom-5 -left-6 h-6" />
+            );
       }
    }, [specialCode]);
 
