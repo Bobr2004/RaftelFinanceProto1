@@ -265,7 +265,10 @@ function RaftablePage() {
       if (mode === "month" && days) rateRevenue *= days;
 
       const mainRevenue =
-         displayInputs.reduce((acc, el) => acc + getRevenue(el), 0) || 0;
+         displayInputs.reduce(
+            (acc, el) => acc + (el.base ? baseRevenue : getRevenue(el)),
+            0
+         ) || 0;
 
       const bonusesRevenue =
          customCurrentPaymentList.reduce(
@@ -317,7 +320,14 @@ function RaftablePage() {
             displayInputs?.map((py) => {
                return {
                   name: py.name,
-                  value: py.value,
+                  value: !py.base
+                     ? py.value
+                     : Math.round(
+                          paymentInputs.reduce((acc, ell) => {
+                             if (ell.secondary) return acc - Number(ell.value);
+                             return acc;
+                          }, Number(py.value))
+                       ),
                   percentage: py.percentage,
                   order: py.order
                };
