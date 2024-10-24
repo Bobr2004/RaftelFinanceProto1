@@ -24,7 +24,15 @@ import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { PaymentInput } from "../../components/ui/PaymentInput";
 import { NavLink, useParams, useSearchParams } from "react-router-dom";
 
+import { v4 as generateId } from "uuid";
+
 import { raftables } from "./dummyData";
+import {
+   addCustomPayment,
+   deleteCustomPayment
+} from "../../store/settingsSlice";
+import { BEInput } from "../../components/ui/BEInput";
+import { CreateBE } from "../../components/ui/CreateBE";
 
 type paymentInputType = {
    id: number;
@@ -35,6 +43,12 @@ type paymentInputType = {
    secondary?: boolean;
    value: "" | number;
    info?: string;
+};
+
+type BEInputType = {
+   id: string;
+   name: string;
+   value: "" | number;
 };
 
 function RaftablePage() {
@@ -98,6 +112,60 @@ function RaftablePage() {
       }
    );
 
+   // CUSTOM INPUTS
+
+   const [addMode, setAddMode] = useState<"Bonus" | "Expense" | "">("");
+
+   const leaveAddMode = () => {
+      setAddMode("");
+   };
+
+   // CUSTOM BONUSES
+
+   const customAllPaymentList = useSelector(
+      (store: RootState) => store.settings.customRaftelPaymentList
+   );
+
+   const [customCurrentPaymentList, setCustomCurrentPaymentList] = useState<
+      BEInputType[]
+   >(() => {
+      return (
+         customAllPaymentList
+            .find((rlp) => rlp.id === raftableData.id)
+            ?.payments.map((py) => {
+               return { value: "", ...py };
+            }) || []
+      );
+   });
+
+   const changeCustomPaymentValue = (id: string) => (value: string) => {
+      let valueToSet: "" | number = "";
+      if (value) valueToSet = Number(value);
+      setCustomCurrentPaymentList((pys) =>
+         pys.map((py) => (py.id === id ? { ...py, value: valueToSet } : py))
+      );
+   };
+
+   useEffect(() => {
+      setCustomCurrentPaymentList((pys) => {
+         let newList: BEInputType[] =
+            customAllPaymentList
+               .find((rlp) => rlp.id === raftableData.id)
+               ?.payments.map((py) => {
+                  return { value: "", ...py };
+               }) || [];
+
+         newList = newList.map((py) => {
+            const savedPy = pys.find((ppy) => ppy.id === py.id);
+            if (savedPy) return { ...savedPy };
+            return py;
+         });
+         return newList;
+      });
+   }, [customAllPaymentList]);
+
+   // CUSTOM EXPENSES
+
    const baseRevenue = useMemo(() => {
       const baseIn = paymentInputs.find((el) => el.base);
       if (!baseIn) return 0;
@@ -124,8 +192,8 @@ function RaftablePage() {
       );
    };
 
-   // Optional
-   const [optional, setOptional] = useState<number | "">("");
+   // // Optional
+   // const [optional, setOptional] = useState<number | "">("");
 
    // Animations
    const [isBlurred, setIsBlurred] = useState(false);
@@ -265,34 +333,49 @@ function RaftablePage() {
                      className="gap-2 self-start w-full"
                   >
                      <Col>
-                        <InputField
-                           name={t("calculation.bonus")}
-                           value={optional}
-                           onChange={handleNumberInput(setOptional)}
-                           display={displayRevenue(Number(optional))}
-                        />
-                        <InputField
-                           name={t("calculation.tax")}
-                           value={optional}
-                           onChange={handleNumberInput(setOptional)}
-                           display={displayRevenue(Number(optional))}
-                        />
-                        <Row className="!grid !grid-cols-2 text-[0.8em]">
-                           <ButtonIcon>
-                              {t("calculation.addIncome")}{" "}
-                              <FontAwesomeIcon
-                                 className="text-green-500"
-                                 icon={faCoins}
-                              />
-                           </ButtonIcon>
-                           <ButtonIcon>
-                              {t("calculation.addExpense")}{" "}
-                              <FontAwesomeIcon
-                                 className="text-red-500"
-                                 icon={faCoins}
-                              />
-                           </ButtonIcon>
-                        </Row>
+                        {customCurrentPaymentList?.map((el) => (
+                           <BEInput
+                              key={el.id}
+                              name={el.name}
+                              value={el.value}
+                              onChange={changeCustomPaymentValue(el.id)}
+                              display={Number(el.value)}
+                              handleDelete={() => {
+                                 dispatch(
+                                    deleteCustomPayment({
+                                       raftelId: raftableData.id,
+                                       BEId: el.id
+                                    })
+                                 );
+                              }}
+                           />
+                        ))}
+                        {addMode ? (
+                           <CreateBE
+                              type={addMode}
+                              leaveAddMode={leaveAddMode}
+                              raftableId={raftableData.id}
+                           />
+                        ) : (
+                           <Row className="!grid !grid-cols-2 text-[0.8em]">
+                              <Button className="!px-1 !py-3"
+                                 onClick={()=>{setAddMode("Bonus")}}
+                              >
+                                 {t("calculation.addIncome")}{" "}
+                                 <FontAwesomeIcon
+                                    className="text-green-500"
+                                    icon={faCoins}
+                                 />
+                              </Button>
+                              <Button onClick={()=>{setAddMode("Expense")}} className="!px-1 !py-3">
+                                 {t("calculation.addExpense")}{" "}
+                                 <FontAwesomeIcon
+                                    className="text-red-500"
+                                    icon={faCoins}
+                                 />
+                              </Button>
+                           </Row>
+                        )}
                      </Col>
                   </OpenClose>
                </Col>
@@ -319,7 +402,7 @@ function RaftablePage() {
                   >
                      {calculateResultRevenue()}
                   </ResultBox>
-                  <div className="text-center">
+                  <div className="text-center mt-1">
                      <Button
                         className="!px-12"
                         onClick={() => {

@@ -15,7 +15,7 @@ function Settings({ children }: SettingsProps) {
    //    theme = themeFromParams;
    // }
    // const dispatch = useDispatch();
-   const { theme, fontSize, language, currency, customCurrencyList } =
+   const { theme, fontSize, language, currency, customCurrencyList, customRaftelPaymentList } =
       useSelector((store: RootState) => store.settings);
 
 
@@ -33,6 +33,16 @@ function Settings({ children }: SettingsProps) {
          JSON.stringify(customCurrencyList)
       );
    }, [customCurrencyList]);
+
+   // CustomPayments trigger
+   useEffect(() => {
+      localStorage.setItem(
+         "storageCustomRaftelPaymentsList",
+         JSON.stringify(customRaftelPaymentList)
+      );
+   }, [customRaftelPaymentList]);
+
+
 
    // Other settings trigger
    useEffect(() => {
