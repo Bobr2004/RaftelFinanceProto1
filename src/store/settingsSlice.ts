@@ -37,13 +37,18 @@ const getSettingsFromStorage = () => {
       localStorage.getItem("storageCustomRaftelPaymentsList") || "[]"
    );
 
+   const storageCustomRaftelExpensesList = JSON.parse(
+      localStorage.getItem("storageCustomRaftelExpensesList") || "[]"
+   );
+
    return {
       theme: storageTheme || "dark",
       fontSize: storageFontSize || "16px",
       language: storageLanguage || "ukrainian",
       currency: storageCurrency || "UAH-грн-₴",
       customCurrencyList: storageCustomCurrencyList || [],
-      customRaftelPaymentList: storageCustomRaftelPaymentList || []
+      customRaftelPaymentList: storageCustomRaftelPaymentList || [],
+      customRaftelExpensesList: storageCustomRaftelExpensesList || []
    } as settingsSliceType;
 };
 
@@ -69,6 +74,27 @@ const addBE = (
          return rpl;
       });
    }
+};
+
+const deleteBE = (
+   BEType: "customRaftelExpensesList" | "customRaftelPaymentList",
+   state: any,
+   action: any
+) => {
+   state[BEType] = state[BEType].map((rpl: any) => {
+      if (rpl.id === action.payload.raftelId) {
+         return {
+            id: rpl.id,
+            payments: rpl.payments.filter((py: any) => {
+               console.log(py.id);
+               console.log(action.payload.BEId);
+               console.log(py.id !== action.payload.BEId);
+               return py.id !== action.payload.BEId;
+            })
+         };
+      }
+      return rpl;
+   });
 };
 
 const initialState = getSettingsFromStorage();
@@ -107,24 +133,19 @@ const settingsSlice = createSlice({
          state,
          action: PayloadAction<{ raftelId: number; BEId: string }>
       ) {
-         console.log("oleg");
-
-         state.customRaftelPaymentList = state.customRaftelPaymentList.map(
-            (rpl) => {
-               if (rpl.id === action.payload.raftelId) {
-                  return {
-                     id: rpl.id,
-                     payments: rpl.payments.filter((py) => {
-                        console.log(py.id);
-                        console.log(action.payload.BEId);
-                        console.log(py.id !== action.payload.BEId);
-                        return py.id !== action.payload.BEId;
-                     })
-                  };
-               }
-               return rpl;
-            }
-         );
+         deleteBE("customRaftelPaymentList", state, action);
+      },
+      addCustomExpense(
+         state,
+         action: PayloadAction<{ raftelId: number; payment: customBE }>
+      ) {
+         addBE("customRaftelExpensesList", state, action);
+      },
+      deleteCustomExpense(
+         state,
+         action: PayloadAction<{ raftelId: number; BEId: string }>
+      ) {
+         deleteBE("customRaftelExpensesList", state, action);
       }
    }
 });
@@ -139,6 +160,8 @@ export const {
    addCustomCurrency,
    deleteCustomCurrency,
    addCustomPayment,
-   deleteCustomPayment
+   deleteCustomPayment,
+   addCustomExpense,
+   deleteCustomExpense
 } = settingsSlice.actions;
 export const settingsSliceReducer = settingsSlice.reducer;

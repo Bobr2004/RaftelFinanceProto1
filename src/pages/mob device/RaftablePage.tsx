@@ -17,18 +17,16 @@ import { RootState } from "../../store/store";
 import { Tab } from "../../components/ui/Tab";
 import "./animations.scss";
 import { openBill, openDescription } from "../../store/modalsSlice";
-import { Button, ButtonIcon } from "../../components/ui/Button";
+import { Button } from "../../components/ui/Button";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { PaymentInput } from "../../components/ui/PaymentInput";
 import { NavLink, useParams, useSearchParams } from "react-router-dom";
 
-import { v4 as generateId } from "uuid";
-
 import { raftables } from "./dummyData";
 import {
-   addCustomPayment,
+   deleteCustomExpense,
    deleteCustomPayment
 } from "../../store/settingsSlice";
 import { BEInput } from "../../components/ui/BEInput";
@@ -165,6 +163,48 @@ function RaftablePage() {
    }, [customAllPaymentList]);
 
    // CUSTOM EXPENSES
+
+   const customAllExpensesList = useSelector(
+      (store: RootState) => store.settings.customRaftelExpensesList
+   );
+
+   const [customCurrentExpensesList, setCustomCurrentExpensesList] = useState<
+      BEInputType[]
+   >(() => {
+      return (
+         customAllExpensesList
+            .find((rlp) => rlp.id === raftableData.id)
+            ?.payments.map((py) => {
+               return { value: "", ...py };
+            }) || []
+      );
+   });
+
+   const changeCustomExpenseValue = (id: string) => (value: string) => {
+      let valueToSet: "" | number = "";
+      if (value) valueToSet = Number(value);
+      setCustomCurrentExpensesList((pys) =>
+         pys.map((py) => (py.id === id ? { ...py, value: valueToSet } : py))
+      );
+   };
+
+   useEffect(() => {
+      setCustomCurrentExpensesList((pys) => {
+         let newList: BEInputType[] =
+            customAllExpensesList
+               .find((rlp) => rlp.id === raftableData.id)
+               ?.payments.map((py) => {
+                  return { value: "", ...py };
+               }) || [];
+
+         newList = newList.map((py) => {
+            const savedPy = pys.find((ppy) => ppy.id === py.id);
+            if (savedPy) return { ...savedPy };
+            return py;
+         });
+         return newList;
+      });
+   }, [customAllExpensesList]);
 
    const baseRevenue = useMemo(() => {
       const baseIn = paymentInputs.find((el) => el.base);
@@ -350,6 +390,24 @@ function RaftablePage() {
                               }}
                            />
                         ))}
+
+                        {customCurrentExpensesList?.map((el) => (
+                           <BEInput
+                              key={el.id}
+                              name={el.name}
+                              value={el.value}
+                              onChange={changeCustomExpenseValue(el.id)}
+                              display={Number(el.value)}
+                              handleDelete={() => {
+                                 dispatch(
+                                    deleteCustomExpense({
+                                       raftelId: raftableData.id,
+                                       BEId: el.id
+                                    })
+                                 );
+                              }}
+                           />
+                        ))}
                         {addMode ? (
                            <CreateBE
                               type={addMode}
@@ -358,8 +416,11 @@ function RaftablePage() {
                            />
                         ) : (
                            <Row className="!grid !grid-cols-2 text-[0.8em]">
-                              <Button className="!px-1 !py-3"
-                                 onClick={()=>{setAddMode("Bonus")}}
+                              <Button
+                                 className="!px-1 !py-3"
+                                 onClick={() => {
+                                    setAddMode("Bonus");
+                                 }}
                               >
                                  {t("calculation.addIncome")}{" "}
                                  <FontAwesomeIcon
@@ -367,7 +428,12 @@ function RaftablePage() {
                                     icon={faCoins}
                                  />
                               </Button>
-                              <Button onClick={()=>{setAddMode("Expense")}} className="!px-1 !py-3">
+                              <Button
+                                 onClick={() => {
+                                    setAddMode("Expense");
+                                 }}
+                                 className="!px-1 !py-3"
+                              >
                                  {t("calculation.addExpense")}{" "}
                                  <FontAwesomeIcon
                                     className="text-red-500"
