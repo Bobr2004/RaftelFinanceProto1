@@ -31,6 +31,7 @@ import {
 } from "../../store/settingsSlice";
 import { BEInput } from "../../components/ui/BEInput";
 import { CreateBE } from "../../components/ui/CreateBE";
+import { Divider } from "../../components/ui/Divider";
 
 type paymentInputType = {
    id: number;
@@ -280,6 +281,18 @@ function RaftablePage() {
             return { ...el, value: "" };
          })
       );
+
+      setCustomCurrentExpensesList((pys) =>
+         pys.map((el) => {
+            return { ...el, value: "" };
+         })
+      );
+
+      setCustomCurrentPaymentList((pys) =>
+         pys.map((el) => {
+            return { ...el, value: "" };
+         })
+      );
    };
 
    const calculateRevenueObject = () => {
@@ -375,6 +388,7 @@ function RaftablePage() {
                      <Col>
                         {customCurrentPaymentList?.map((el) => (
                            <BEInput
+                              type="bonus"
                               key={el.id}
                               name={el.name}
                               value={el.value}
@@ -390,9 +404,11 @@ function RaftablePage() {
                               }}
                            />
                         ))}
+                        <Divider />
 
                         {customCurrentExpensesList?.map((el) => (
                            <BEInput
+                              type="expense"
                               key={el.id}
                               name={el.name}
                               value={el.value}
@@ -417,7 +433,7 @@ function RaftablePage() {
                         ) : (
                            <Row className="!grid !grid-cols-2 text-[0.8em]">
                               <Button
-                                 className="!px-1 !py-3"
+                                 className="!px-1 !py-1"
                                  onClick={() => {
                                     setAddMode("Bonus");
                                  }}
@@ -432,7 +448,7 @@ function RaftablePage() {
                                  onClick={() => {
                                     setAddMode("Expense");
                                  }}
-                                 className="!px-1 !py-3"
+                                 className="!px-1 !py-1"
                               >
                                  {t("calculation.addExpense")}{" "}
                                  <FontAwesomeIcon

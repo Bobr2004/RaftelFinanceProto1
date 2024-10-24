@@ -9,6 +9,7 @@ type InputFieldProps = {
    className?: string;
    display?: any;
    info?: string;
+   boxStyle?: string;
 };
 
 function InputField({
@@ -17,7 +18,8 @@ function InputField({
    onChange,
    className,
    display,
-   info
+   info,
+   boxStyle
 }: InputFieldProps) {
    className ??= "";
    return (
@@ -26,7 +28,7 @@ function InputField({
             <div className="relative">
                {info && <InfoButton className="InputField__Info-hover" />}
                <label
-                  className={`C-bgSpecialBox C-borderBox rounded-xl border outline outline-0 C-outlineBox`}
+                  className={`C-bgSpecialBox C-borderBox rounded-xl border outline outline-0 C-outlineBox ${boxStyle}`}
                >
                   <input
                      type="text"

@@ -25,7 +25,14 @@ function CreateBE({ type, leaveAddMode, raftableId }: CreateBEProps) {
 
    const dispatch = useDispatch();
 
-   const submitCustomCurrency = () => {
+   const boxStyles = (type: string) => {
+      if (type === "Expense") return "ExpenseBox";
+
+      if (type === "Bonus") return "BonusBox";
+      return "";
+   };
+
+   const submitCustomBE = () => {
       if (!customBE) {
          leaveAddMode();
          return;
@@ -46,7 +53,7 @@ function CreateBE({ type, leaveAddMode, raftableId }: CreateBEProps) {
             })
          );
       }
-      else {
+      else if (type = "Expense") {
          dispatch(
             addCustomExpense({
                raftelId: raftableId,
@@ -60,18 +67,22 @@ function CreateBE({ type, leaveAddMode, raftableId }: CreateBEProps) {
       leaveAddMode();
    };
 
+   const titleBE = () => {
+      if (type === "Bonus") return "Назва доходу";
+      if (type === "Expense") return "Назва витрати";
+      return "Назва поля";
+   };
+
    return (
       <>
          <Row className="items-start">
             <InputField
-               name={t("settings.currency")}
+               boxStyle={boxStyles(type)}
+               name={titleBE()}
                value={customBE}
                onChange={handleTextInput(setCustomBE)}
             />
-            <Button
-               className="py-3 w-12 text-center"
-               onClick={submitCustomCurrency}
-            >
+            <Button className="py-3 w-12 text-center" onClick={submitCustomBE}>
                <FontAwesomeIcon icon={customBE ? faCheck : faXmark} />
             </Button>
          </Row>

@@ -29,7 +29,7 @@ function ResultBox({ children, onClick, specialCode }: ResultBoxProps) {
             return <StrawHatIcon className="absolute -top-5 -right-6 h-12 rotate-[18deg] " />;
          case "Akagami":
             setCustomStyles((cs) => {
-               return { ...cs, border: "2px solid #b91c1c", boxShadow: "0px 0px 16px #dc2626" };
+               return { ...cs, border: "0.5px solid #b91c1c", boxShadow: "2px 2px 10px #dc2626" };
             });
             return;
       }

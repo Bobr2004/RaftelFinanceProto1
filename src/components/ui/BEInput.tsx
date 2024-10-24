@@ -6,7 +6,10 @@ import { ButtonIcon } from "./Button";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import "./BEInput.scss";
+
 type BEInputProps = {
+   type: string;
    name: string;
    value: number | "";
    onChange: (e: string) => void;
@@ -15,6 +18,7 @@ type BEInputProps = {
 };
 
 function BEInput({
+   type,
    name,
    value,
    onChange,
@@ -23,13 +27,41 @@ function BEInput({
 }: BEInputProps) {
    const currency = useSelector((store: RootState) => store.settings.currency);
    const [_, currencyName] = useMemo(() => parseCurrency(currency), [currency]);
+
+   const renderDisplay = () => {
+      if (type === "expense")
+         return (
+            <span className="overflow-x-scroll whitespace-nowrap ExpenseDisplay">
+               {display ? `- ${display} ${currencyName}` : ""}
+            </span>
+         );
+      if (type === "bonus")
+         return (
+            <span className="overflow-x-scroll whitespace-nowrap BonusDisplay">
+               {display ? `+ ${display} ${currencyName}` : ""}
+            </span>
+         );
+      return (
+         <span className="overflow-x-scroll whitespace-nowrap">
+            {display ? `+ ${display} ${currencyName}` : ""}
+         </span>
+      );
+   };
+
+   const boxStyles = (type: string) => {
+      if (type === "expense") return "ExpenseBox";
+
+      if (type === "bonus") return "BonusBox";
+      return "";
+   };
+
    return (
       <div className="InputField__Info flex flex-col gap-1">
          <div className={`InputField gap-4 w-full items-center`}>
             <div className="relative">
                {<DeleteCustomBEButton {...{ handleDelete }} />}
                <label
-                  className={`C-bgSpecialBox C-borderBox rounded-xl border outline outline-0 C-outlineBox`}
+                  className={`C-bgSpecialBox C-borderBox rounded-xl border outline outline-0 C-outlineBox ${boxStyles(type)}`}
                >
                   <input
                      type="number"
@@ -42,11 +74,7 @@ function BEInput({
                   <span>{name}</span>
                </label>
             </div>
-            {display !== undefined && (
-               <span className="C-textSofter overflow-x-scroll whitespace-nowrap">
-                  {display ? `+ ${display} ${currencyName}` : ""}
-               </span>
-            )}
+            {display !== undefined && renderDisplay()}
          </div>
       </div>
    );
