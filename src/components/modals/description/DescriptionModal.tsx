@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import { ModalTemplate } from "../ModalTemplate";
 
 function DescriptionModal({data}: any) {
-   console.log(data)
    const { t } = useTranslation();
 
    return (

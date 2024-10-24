@@ -86,9 +86,6 @@ const deleteBE = (
          return {
             id: rpl.id,
             payments: rpl.payments.filter((py: any) => {
-               console.log(py.id);
-               console.log(action.payload.BEId);
-               console.log(py.id !== action.payload.BEId);
                return py.id !== action.payload.BEId;
             })
          };
