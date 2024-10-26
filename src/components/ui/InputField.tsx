@@ -42,7 +42,7 @@ function InputField({
                </label>
             </div>
             {display !== undefined && (
-               <span className="C-textSofter overflow-x-scroll whitespace-nowrap">
+               <span className="C-textSofter overflow-x-auto whitespace-nowrap">
                   {display && "+"}
                   {display}
                </span>

@@ -165,7 +165,7 @@ function BillModal({ data }: { data: megaNigger }) {
       <ModalTemplate title={t("bill.billTitle")}>
          <Row32>
             {/* <div className="flex justify-center"> */}
-            <div className="overflow-x-scroll border C-borderBox flex justify-center">
+            <div className="overflow-x-auto border C-borderBox flex justify-center">
                <div
                   className="!bg-white !text-black text-[14px] flex flex-col gap-1 p-4 w-[300px] relative z-40"
                   ref={receiptRef}

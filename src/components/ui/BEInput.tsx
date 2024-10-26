@@ -31,18 +31,18 @@ function BEInput({
    const renderDisplay = () => {
       if (type === "expense")
          return (
-            <span className="overflow-x-scroll whitespace-nowrap ExpenseDisplay">
+            <span className="overflow-x-auto whitespace-nowrap ExpenseDisplay">
                {display ? `- ${display} ${currencyName}` : ""}
             </span>
          );
       if (type === "bonus")
          return (
-            <span className="overflow-x-scroll whitespace-nowrap BonusDisplay">
+            <span className="overflow-x-auto whitespace-nowrap BonusDisplay">
                {display ? `+ ${display} ${currencyName}` : ""}
             </span>
          );
       return (
-         <span className="overflow-x-scroll whitespace-nowrap">
+         <span className="overflow-x-auto whitespace-nowrap">
             {display ? `+ ${display} ${currencyName}` : ""}
          </span>
       );
